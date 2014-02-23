@@ -7,11 +7,9 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		8704D41418B5F34400953404 /* GoogleCast.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8704D41318B5F34400953404 /* GoogleCast.framework */; };
 		8793651318B8251700AD0B3C /* CoreMedia.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8793651218B8251700AD0B3C /* CoreMedia.framework */; };
 		8793651518B8252A00AD0B3C /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8793651418B8252A00AD0B3C /* QuartzCore.framework */; };
 		8793651718B8255500AD0B3C /* OpenGLES.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8793651618B8255500AD0B3C /* OpenGLES.framework */; };
-		8793651918B8260B00AD0B3C /* GPUImage.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8793651818B8260B00AD0B3C /* GPUImage.framework */; };
 		8793653318B9945500AD0B3C /* ELCAlbumPickerController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8793651E18B9945500AD0B3C /* ELCAlbumPickerController.m */; };
 		8793653418B9945500AD0B3C /* ELCAsset.m in Sources */ = {isa = PBXBuildFile; fileRef = 8793652018B9945500AD0B3C /* ELCAsset.m */; };
 		8793653518B9945500AD0B3C /* ELCAssetCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 8793652218B9945500AD0B3C /* ELCAssetCell.m */; };
@@ -59,6 +57,8 @@
 		879EDE1D18B70A28006A1735 /* video.mp4 in Resources */ = {isa = PBXBuildFile; fileRef = 879EDE1B18B70A28006A1735 /* video.mp4 */; };
 		879EDE3218B71587006A1735 /* Web in Resources */ = {isa = PBXBuildFile; fileRef = 879EDE3118B71587006A1735 /* Web */; };
 		879EDE3418B74DA9006A1735 /* AVFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 879EDE3318B74DA9006A1735 /* AVFoundation.framework */; };
+		87F1D42B18BA11B000EB1C42 /* GPUImage.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 87F1D42A18BA11B000EB1C42 /* GPUImage.framework */; };
+		87F1D42F18BA12C400EB1C42 /* GoogleCast.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 87F1D42E18BA12C400EB1C42 /* GoogleCast.framework */; };
 		CC34F3D41885E326007E3FFC /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CC34F3D31885E326007E3FFC /* Foundation.framework */; };
 		CC34F3D61885E326007E3FFC /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CC34F3D51885E326007E3FFC /* CoreGraphics.framework */; };
 		CC34F3D81885E326007E3FFC /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CC34F3D71885E326007E3FFC /* UIKit.framework */; };
@@ -91,11 +91,9 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
-		8704D41318B5F34400953404 /* GoogleCast.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = GoogleCast.framework; path = "../GoogleCastFramework-2.0-Release/GoogleCast.framework"; sourceTree = "<group>"; };
 		8793651218B8251700AD0B3C /* CoreMedia.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreMedia.framework; path = System/Library/Frameworks/CoreMedia.framework; sourceTree = SDKROOT; };
 		8793651418B8252A00AD0B3C /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
 		8793651618B8255500AD0B3C /* OpenGLES.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OpenGLES.framework; path = System/Library/Frameworks/OpenGLES.framework; sourceTree = SDKROOT; };
-		8793651818B8260B00AD0B3C /* GPUImage.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = GPUImage.framework; path = "../GPUImage-master/build/GPUImage.framework"; sourceTree = "<group>"; };
 		8793651D18B9945500AD0B3C /* ELCAlbumPickerController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ELCAlbumPickerController.h; sourceTree = "<group>"; };
 		8793651E18B9945500AD0B3C /* ELCAlbumPickerController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ELCAlbumPickerController.m; sourceTree = "<group>"; };
 		8793651F18B9945500AD0B3C /* ELCAsset.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ELCAsset.h; sourceTree = "<group>"; };
@@ -178,7 +176,8 @@
 		879EDE1B18B70A28006A1735 /* video.mp4 */ = {isa = PBXFileReference; lastKnownFileType = file; path = video.mp4; sourceTree = "<group>"; };
 		879EDE3118B71587006A1735 /* Web */ = {isa = PBXFileReference; lastKnownFileType = folder; name = Web; path = HelloVideoGoogleCast/Web; sourceTree = "<group>"; };
 		879EDE3318B74DA9006A1735 /* AVFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AVFoundation.framework; path = System/Library/Frameworks/AVFoundation.framework; sourceTree = SDKROOT; };
-		C585EBA018A9B1E5007DF7E2 /* GCKFramework 2.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = "GCKFramework 2.framework"; path = "../GCKFramework 2.framework"; sourceTree = "<group>"; };
+		87F1D42A18BA11B000EB1C42 /* GPUImage.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = GPUImage.framework; sourceTree = "<group>"; };
+		87F1D42E18BA12C400EB1C42 /* GoogleCast.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = GoogleCast.framework; sourceTree = "<group>"; };
 		CC34F3D01885E326007E3FFC /* HelloVideoGoogleCast.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = HelloVideoGoogleCast.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		CC34F3D31885E326007E3FFC /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		CC34F3D51885E326007E3FFC /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
@@ -210,15 +209,15 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				8793651918B8260B00AD0B3C /* GPUImage.framework in Frameworks */,
+				87F1D42F18BA12C400EB1C42 /* GoogleCast.framework in Frameworks */,
 				8793651718B8255500AD0B3C /* OpenGLES.framework in Frameworks */,
 				8793651518B8252A00AD0B3C /* QuartzCore.framework in Frameworks */,
 				8793651318B8251700AD0B3C /* CoreMedia.framework in Frameworks */,
 				879EDE3418B74DA9006A1735 /* AVFoundation.framework in Frameworks */,
 				879EDDB918B6D249006A1735 /* Security.framework in Frameworks */,
 				879EDDB718B6D241006A1735 /* CFNetwork.framework in Frameworks */,
+				87F1D42B18BA11B000EB1C42 /* GPUImage.framework in Frameworks */,
 				879EDE1818B6DBBA006A1735 /* GCDAsyncSocket.m in Frameworks */,
-				8704D41418B5F34400953404 /* GoogleCast.framework in Frameworks */,
 				CC34F3D61885E326007E3FFC /* CoreGraphics.framework in Frameworks */,
 				CC34F3D81885E326007E3FFC /* UIKit.framework in Frameworks */,
 				CC34F3D41885E326007E3FFC /* Foundation.framework in Frameworks */,
@@ -431,7 +430,6 @@
 				8793651A18B9940B00AD0B3C /* ELCImagePicker */,
 				879EDE3018B7155C006A1735 /* Resources */,
 				879EDDF618B6DB5F006A1735 /* httpserver */,
-				C585EBA018A9B1E5007DF7E2 /* GCKFramework 2.framework */,
 				CC34F3D91885E326007E3FFC /* HelloVideoGoogleCast */,
 				CC34F3FB1885E326007E3FFC /* HelloVideoGoogleCastTests */,
 				CC34F3D21885E326007E3FFC /* Frameworks */,
@@ -451,14 +449,14 @@
 		CC34F3D21885E326007E3FFC /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
-				8793651818B8260B00AD0B3C /* GPUImage.framework */,
+				87F1D42E18BA12C400EB1C42 /* GoogleCast.framework */,
+				87F1D42A18BA11B000EB1C42 /* GPUImage.framework */,
 				8793651618B8255500AD0B3C /* OpenGLES.framework */,
 				8793651418B8252A00AD0B3C /* QuartzCore.framework */,
 				8793651218B8251700AD0B3C /* CoreMedia.framework */,
 				879EDE3318B74DA9006A1735 /* AVFoundation.framework */,
 				879EDDB818B6D249006A1735 /* Security.framework */,
 				879EDDB618B6D241006A1735 /* CFNetwork.framework */,
-				8704D41318B5F34400953404 /* GoogleCast.framework */,
 				CC34F3D31885E326007E3FFC /* Foundation.framework */,
 				CC34F3D51885E326007E3FFC /* CoreGraphics.framework */,
 				CC34F3D71885E326007E3FFC /* UIKit.framework */,
@@ -808,9 +806,10 @@
 					"$(inherited)",
 					.,
 					..,
-					"\\\\\\\"$(SRCROOT)/..\\\\\\\"",
+					"\\\\\\\\\\\\\\\"$(SRCROOT)/..\\\\\\\\\\\\\\\"",
 					"/Users/daviddavis/Documents/backup/GoogleCastFramework-2.0-Release",
 					"/Users/daviddavis/Documents/backup/GPUImage-master/build",
+					"/Users/daviddavis/Documents/sandbox/CastHelloVideo-ios-master",
 				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "HelloVideoGoogleCast/HelloVideoGoogleCast-Prefix.pch";
@@ -831,9 +830,10 @@
 					"$(inherited)",
 					.,
 					..,
-					"\\\\\\\"$(SRCROOT)/..\\\\\\\"",
+					"\\\\\\\\\\\\\\\"$(SRCROOT)/..\\\\\\\\\\\\\\\"",
 					"/Users/daviddavis/Documents/backup/GoogleCastFramework-2.0-Release",
 					"/Users/daviddavis/Documents/backup/GPUImage-master/build",
+					"/Users/daviddavis/Documents/sandbox/CastHelloVideo-ios-master",
 				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "HelloVideoGoogleCast/HelloVideoGoogleCast-Prefix.pch";
