@@ -1023,9 +1023,9 @@ static NSMutableArray *recentNonces;
 	NSString *contentRangeStr = [NSString stringWithFormat:@"bytes %@/%qu", rangeStr, contentLength];
 	[response setHeaderField:@"Content-Range" value:contentRangeStr];
     //dmd
-  //      [response setHeaderField:@"Access-Control-Allow-Origin" value:@"*"];
-    //    [response setHeaderField:@"Access-Control-Allow-Methods" value:@"GET,PUT,POST,DELETE"];
-      //  [response setHeaderField:@"Access-Control-Allow-Headers" value:@"Content-Type"];
+        [response setHeaderField:@"Access-Control-Allow-Origin" value:@"*"];
+        [response setHeaderField:@"Access-Control-Allow-Methods" value:@"GET,PUT,POST,DELETE"];
+        [response setHeaderField:@"Access-Control-Allow-Headers" value:@"Content-Type"];
 
 
 	
@@ -1194,6 +1194,13 @@ static NSMutableArray *recentNonces;
 		{
 			NSString *contentLengthStr = [NSString stringWithFormat:@"%qu", contentLength];
 			[response setHeaderField:@"Content-Length" value:contentLengthStr];
+            //dmd
+            [response setHeaderField:@"Access-Control-Allow-Origin" value:@"*"];
+            [response setHeaderField:@"Access-Control-Allow-Methods" value:@"GET,PUT,POST,DELETE"];
+            [response setHeaderField:@"Access-Control-Allow-Headers" value:@"Content-Type"];
+            
+
+            
 		}
 	}
 	else
@@ -1676,8 +1683,8 @@ static NSMutableArray *recentNonces;
 	// Override me to provide custom responses.
 	
 	//NSString *filePath = [self filePathForURI:path allowDirectory:NO];
-  //dmd  NSString *filePath = [self filePathForURI:path allowDirectory:YES];
-    NSString *filePath = [NSTemporaryDirectory() stringByAppendingPathComponent:path];
+   NSString *filePath = [self filePathForURI:path allowDirectory:YES];
+  //dmd   NSString *filePath = [NSTemporaryDirectory() stringByAppendingPathComponent:path];
 	BOOL isDir = NO;
 	
 	if (filePath && [[NSFileManager defaultManager] fileExistsAtPath:filePath isDirectory:&isDir] && !isDir)

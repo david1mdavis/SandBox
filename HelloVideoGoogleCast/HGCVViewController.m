@@ -664,7 +664,7 @@ typedef enum {
 
 
 //Cast video
-- (IBAction)castVideo22:(id)sender {
+- (IBAction)castVideo2:(id)sender {
   NSLog(@"Cast Video");
 
   //Show alert if not connected
@@ -678,7 +678,8 @@ typedef enum {
     [alert show];
     return;
   }
-   NSString * url = [@"http://192.168.1.5:8080/" stringByAppendingPathComponent:@"stream/index.m3u8"];;
+   NSString * url = [@"http://192.168.1.5:8080" stringByAppendingPathComponent:@"stream/index.m3u8"];;
+    NSLog(@"%@",url);
   //Define Media metadata
   GCKMediaMetadata *metadata = [[GCKMediaMetadata alloc] init];
 
@@ -697,7 +698,8 @@ typedef enum {
         </CORSRule>
         </CORSConfiguration>
 */
-                                        @"https://s3.amazonaws.com/vushaper/00e69baa442cd0f80ed4968efad7ab17.m3u8"
+                                  //      @"https://s3.amazonaws.com/vushaper/00e69baa442cd0f80ed4968efad7ab17.m3u8"
+                                        url
                                         streamType:GCKMediaStreamTypeLive
                                         contentType:@"application/x-mpegURL"
                                         metadata:metadata
@@ -709,7 +711,7 @@ typedef enum {
 
 }
 
-- (IBAction)castVideo2:(id)sender {
+- (IBAction)castVideo22:(id)sender {
     NSLog(@"Cast Video");
     GCKMediaMetadata *metadata = [[GCKMediaMetadata alloc] init];
   
