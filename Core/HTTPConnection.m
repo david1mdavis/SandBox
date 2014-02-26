@@ -18,7 +18,7 @@
 
 // Log levels: off, error, warn, info, verbose
 // Other flags: trace
-static const int httpLogLevel = HTTP_LOG_LEVEL_WARN; // | HTTP_LOG_FLAG_TRACE;
+static const int httpLogLevel = HTTP_LOG_FLAG_VERBOSE; // | HTTP_LOG_FLAG_TRACE;
 
 // Define chunk size used to read in data for responses
 // This is how much data will be read from disk into RAM at a time
@@ -1015,11 +1015,19 @@ static NSMutableArray *recentNonces;
 	DDRange range = [[ranges objectAtIndex:0] ddrangeValue];
 	
 	NSString *contentLengthStr = [NSString stringWithFormat:@"%qu", range.length];
+    //dmd contentLengthStr	__NSCFString *	@"161753683"	0x2005b030
+ //   [response setHeaderField:@"Content-Length" value:@"-1"];
 	[response setHeaderField:@"Content-Length" value:contentLengthStr];
 	
 	NSString *rangeStr = [NSString stringWithFormat:@"%qu-%qu", range.location, DDMaxRange(range) - 1];
 	NSString *contentRangeStr = [NSString stringWithFormat:@"bytes %@/%qu", rangeStr, contentLength];
 	[response setHeaderField:@"Content-Range" value:contentRangeStr];
+    //dmd
+  //      [response setHeaderField:@"Access-Control-Allow-Origin" value:@"*"];
+    //    [response setHeaderField:@"Access-Control-Allow-Methods" value:@"GET,PUT,POST,DELETE"];
+      //  [response setHeaderField:@"Access-Control-Allow-Headers" value:@"Content-Type"];
+
+
 	
 	return response;
 }
@@ -1668,18 +1676,18 @@ static NSMutableArray *recentNonces;
 	// Override me to provide custom responses.
 	
 	//NSString *filePath = [self filePathForURI:path allowDirectory:NO];
-//dmd    NSString *filePath = [self filePathForURI:path allowDirectory:YES];
-	NSString *filePath = [NSTemporaryDirectory() stringByAppendingPathComponent:path];
+  //dmd  NSString *filePath = [self filePathForURI:path allowDirectory:YES];
+    NSString *filePath = [NSTemporaryDirectory() stringByAppendingPathComponent:path];
 	BOOL isDir = NO;
 	
 	if (filePath && [[NSFileManager defaultManager] fileExistsAtPath:filePath isDirectory:&isDir] && !isDir)
 	{
-		return [[HTTPFileResponse alloc] initWithFilePath:filePath forConnection:self];
+		//dmd return [[HTTPFileResponse alloc] initWithFilePath:filePath forConnection:self];
 	
 		// Use me instead for asynchronous file IO.
 		// Generally better for larger files.
 		
-	//	return [[[HTTPAsyncFileResponse alloc] initWithFilePath:filePath forConnection:self] autorelease];
+		return [[HTTPAsyncFileResponse alloc] initWithFilePath:filePath forConnection:self] ;
 	}
 	
 	return nil;

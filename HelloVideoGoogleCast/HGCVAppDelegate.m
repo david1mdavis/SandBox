@@ -87,14 +87,13 @@ static const int ddLogLevel = LOG_LEVEL_VERBOSE;
     httpServer = [[HTTPServer alloc] init];
     [httpServer setType:@"_http._tcp."];
     [httpServer setPort:8080];
-//dmd    NSString *webPath = [[[NSBundle mainBundle] resourcePath] stringByAppendingPathComponent:@"Web"];
-   NSString *webPath = [[[NSBundle mainBundle] resourcePath] stringByAppendingPathComponent:@"tmp"];
+    NSString *webPath = [[[NSBundle mainBundle] resourcePath] stringByAppendingPathComponent:@"Web"];
+//dmd   NSString *webPath = [[[NSBundle mainBundle] resourcePath] stringByAppendingPathComponent:@"tmp"];
 	DDLogInfo(@"Setting document root: %@", webPath);
 	
 	[httpServer setDocumentRoot:webPath];
     
-    [self startServer];
-    DDLogInfo(@"Started HTTP Server on ip %@", [self getIPAddress:TRUE]);
+    
 
   return YES;
 }
@@ -130,6 +129,8 @@ static const int ddLogLevel = LOG_LEVEL_VERBOSE;
 
 - (void)applicationDidBecomeActive:(UIApplication *)application {
   // Restart any tasks that were paused (or not yet started) while the application was inactive. If the application was previously in the background, optionally refresh the user interface.
+    [self startServer];
+    DDLogInfo(@"Started HTTP Server on ip %@", [self getIPAddress:TRUE]);
 }
 
 - (void)applicationWillTerminate:(UIApplication *)application {

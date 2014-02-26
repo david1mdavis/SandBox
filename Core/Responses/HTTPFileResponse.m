@@ -42,8 +42,10 @@ static const int httpLogLevel = HTTP_LOG_LEVEL_WARN; // | HTTP_LOG_FLAG_TRACE;
 			
 			return nil;
 		}
+        //dmd
 		
 		fileLength = (UInt64)[[fileAttributes objectForKey:NSFileSize] unsignedLongLongValue];
+      //  fileLength = 100097709;
 		fileOffset = 0;
 		
 		aborted = NO;
@@ -102,7 +104,10 @@ static const int httpLogLevel = HTTP_LOG_LEVEL_WARN; // | HTTP_LOG_FLAG_TRACE;
 - (UInt64)contentLength
 {
 	HTTPLogTrace();
-	
+	//dmd
+   // fileLength = 100097709;
+    NSLog(@"filelenght= %qu",fileLength);
+    
 	return fileLength;
 }
 
@@ -190,9 +195,12 @@ static const int httpLogLevel = HTTP_LOG_LEVEL_WARN; // | HTTP_LOG_FLAG_TRACE;
 	else if (result == 0)
 	{
 		HTTPLogError(@"%@: Read EOF on file(%@)", THIS_FILE, filePath);
-		
-		[self abort];
-		return nil;
+	//	sleep(1.5);
+		//dmd [self abort];
+      //  ssize_t result = read(fileFD, buffer, bytesToRead);
+        //if (result == 0)
+            return nil;
+	
 	}
 	else // (result > 0)
 	{

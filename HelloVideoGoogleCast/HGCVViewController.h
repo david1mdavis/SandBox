@@ -27,11 +27,16 @@
                                                  UIActionSheetDelegate,
                                                 ELCImagePickerControllerDelegate>
 {
-   
+ 
+    __weak IBOutlet UIButton *castMidea;
+
+    __weak IBOutlet UIButton *choosmedia;
+    __weak IBOutlet UISegmentedControl *filterSegment;
 
 }
 
 
 
-
+@property(strong, nonatomic)    AVMutableComposition *mutableComposition;
+@property(strong, nonatomic)   AVMutableVideoComposition *mutableVideoComposition ;
 @end

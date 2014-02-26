@@ -11,7 +11,7 @@
 
 // Log levels : off, error, warn, info, verbose
 // Other flags: trace
-static const int httpLogLevel = HTTP_LOG_LEVEL_WARN; // | HTTP_LOG_FLAG_TRACE;
+static const int httpLogLevel = HTTP_LOG_LEVEL_ERROR; // | HTTP_LOG_FLAG_TRACE;
 
 #define NULL_FD  -1
 
@@ -60,6 +60,9 @@ static const int httpLogLevel = HTTP_LOG_LEVEL_WARN; // | HTTP_LOG_FLAG_TRACE;
 		}
 		
 		fileLength = (UInt64)[[fileAttributes objectForKey:NSFileSize] unsignedLongLongValue];
+        //dmd
+     //      NSLog(@"---------------------------filelenght= %qu",fileLength);
+       // fileLength = 100097709;
 		fileOffset = 0;
 		
 		aborted = NO;
