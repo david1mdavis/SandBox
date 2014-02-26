@@ -176,6 +176,8 @@ static NSString *const kReceiverAppID = @"9D100972";
     [self video];
 }
 
+//First try at rotate on iPhone 5 GPU version is faster might need for iphone 4s
+
 - (void) getVideoComposition:(AVAsset*)asset
 {
     
@@ -248,6 +250,7 @@ static NSString *const kReceiverAppID = @"9D100972";
     
   
 }
+
 -(void) convertVideo:(NSURL*)outputURL
              handler:(void (^)(AVAssetExportSession*))handler
 {
@@ -293,6 +296,7 @@ static NSString *const kReceiverAppID = @"9D100972";
 
     
 }
+
 -(void)copyVideoToTemp:(NSURL*) mediaURL
 {
 ALAssetsLibrary *assetLibrary=[[ALAssetsLibrary alloc] init];
@@ -332,75 +336,18 @@ ALAssetsLibrary *assetLibrary=[[ALAssetsLibrary alloc] init];
         NSURL *mediaurl =    [dict objectForKey:UIImagePickerControllerReferenceURL];
         NSString *path = [[NSString alloc] initWithString:[ mediaurl absoluteString]];
         NSLog(@"mediaUL %@",path);
-        //dmd
+
         _theFileName =@"test.mp4";
         NSString *filePath = [NSTemporaryDirectory() stringByAppendingPathComponent:_theFileName];
-        
         
         AVURLAsset *asset2 = [AVURLAsset URLAssetWithURL:mediaurl options:nil];
         CMTime duration;
         duration = asset2.duration;
         
         NSLog(@"media legth seconds = %f", CMTimeGetSeconds(duration));
-      //  [self getVideoComposition:asset2];
-
         
         NSURL *outputURL = [NSURL fileURLWithPath:filePath];
-     /*   [self convertVideo:outputURL handler:^(AVAssetExportSession *exportSession)
-         {
-             choosmedia.hidden =NO;
-             castMidea.hidden =NO;
-
-             if (exportSession.status == AVAssetExportSessionStatusCompleted)
              {
-                 printf("completed\n");
-                 return ;
-                 
-            }
-             else
-             {
-                 printf("error\n");
-                 return ;
-                 
-             }
-         }];
-        return;
-        [self convertVideoToLowQuailtyWithInputURL:mediaurl outputURL:outputURL handler:^(AVAssetExportSession *exportSession)
-         {
-             if (exportSession.status == AVAssetExportSessionStatusCompleted)
-             {
-                 printf("completed\n");
-                 AVURLAsset *asset = [AVURLAsset URLAssetWithURL:mediaurl options:nil];
-                 [self getVideoComposition:asset];
-
-                 NSArray *tracks = [asset tracksWithMediaType:AVMediaTypeVideo];
-                 AVAssetTrack *track = [tracks objectAtIndex:0];
-                 //           int orientation = [[asset valueForProperty:ALAssetPropertyOrientation] intValue];
-                 CGSize mediaSize = track.naturalSize;
-                 NSLog(@"videosize %d  %d",(int)mediaSize.height, (int)mediaSize.width);
-                 // _theFileName = [filePath lastPathComponent];
-                 NSLog(_theFileName);
-                 
-                 CGAffineTransform txf       = [track preferredTransform];
-                 float  videoAngleInDegree  = (atan2(txf.b, txf.a));
-                 // [self dismissModalViewControllerAnimated:YES];
-                 [self rotateVideo:videoAngleInDegree ];
-
-             }
-             else
-             {
-                 printf("error\n");
-                 
-             }
-         }];
-        
-        
-        
-        
-        
-        
-       */
-        {
             printf("completed\n");
             AVURLAsset *asset = [AVURLAsset URLAssetWithURL:mediaurl options:nil];
           
@@ -415,26 +362,25 @@ ALAssetsLibrary *assetLibrary=[[ALAssetsLibrary alloc] init];
             
             CGAffineTransform txf       = [track preferredTransform];
             float  videoAngleInDegree  = (atan2(txf.b, txf.a));
-            // [self dismissModalViewControllerAnimated:YES];
+
             int filterIndex =[self.filterSegment selectedSegmentIndex];
             switch (filterIndex) {
                 case 0:
                     [self rotateVideo:mediaurl radins:0.0 videoWidth:mediaSize.width videoHheightt:mediaSize.height ];
                     break;
+                    
                 case 1:
                     [self rotateVideo:mediaurl radins:videoAngleInDegree videoWidth:mediaSize.width videoHheightt:mediaSize.height ];
                     break;
+                    
                 case 2:
                     [self sketchVideo:mediaurl radins:videoAngleInDegree videoWidth:mediaSize.width videoHheightt:mediaSize.height ];
                     break;
                     
                 case 3:
                     [self toonVideo:mediaurl radins:videoAngleInDegree videoWidth:mediaSize.width videoHheightt:mediaSize.height ];
-                default:
                     break;
             }
-            
-            //[self rotateVideo:mediaurl radins:videoAngleInDegree videoWidth:mediaSize.width videoHheightt:mediaSize.height ];
             
         }
 
@@ -472,15 +418,9 @@ ALAssetsLibrary *assetLibrary=[[ALAssetsLibrary alloc] init];
     [self dismissViewControllerAnimated:YES completion:nil];
 }
 
-- (void)video1 {
-    UIImagePickerController *imagePicker = [[UIImagePickerController alloc] init];
-    imagePicker.delegate = self;
-    imagePicker.sourceType = UIImagePickerControllerSourceTypePhotoLibrary;
-    imagePicker.mediaTypes = [[NSArray alloc] initWithObjects:(NSString *)kUTTypeMovie,      nil];
-    imagePicker.videoQuality = UIImagePickerControllerQualityTypeHigh;
-    
-    [self presentModalViewController:imagePicker animated:YES];
-}
+
+
+
 /*
 -(void) exportcameraroll( )
 {
@@ -536,16 +476,13 @@ typedef enum {
 } LBVideoOrientation;
 
 
--(void) sketchVideo:( NSURL *)sampleURL
+-(void) sketchVideo: (NSURL *)sampleURL
              radins: (float) rad
-         videoWidth:(int)width
-      videoHheightt:(int)Height{
+         videoWidth: (int)width
+      videoHheightt: (int)Height{
     
-    NSString *filePath = [NSTemporaryDirectory() stringByAppendingPathComponent:_theFileName];
-   // NSURL *sampleURL = [NSURL fileURLWithPath:filePath];
-    
-    
-    
+     NSString *filePath = [NSTemporaryDirectory() stringByAppendingPathComponent:_theFileName];
+   
     _movieFile = [[GPUImageMovie alloc] initWithURL:sampleURL];
     _movieFile.runBenchmark = YES;
     _movieFile.playAtActualSpeed = NO;
@@ -557,8 +494,6 @@ typedef enum {
     filter = [[GPUImageTransformFilter alloc] init];
     filter2 = [[GPUImageSketchFilter alloc] init];
     
-    
-    
     [filter setAffineTransform:CGAffineTransformMakeRotation(rad)];
     [filterG  addFilter:filter];
     [filterG  addFilter:filter2];
@@ -567,11 +502,10 @@ typedef enum {
     [(GPUImageFilterGroup *)filterG setInitialFilters:[NSArray arrayWithObject:filter]];
     [(GPUImageFilterGroup *)filterG setTerminalFilter:filter2];
     
-    //[filterG addFilter:filter];
     [_movieFile addTarget:filterG];
     _theFileName = @"temp.m4v";
     filePath = [NSTemporaryDirectory() stringByAppendingPathComponent:_theFileName];
-    //filePath = [NSHomeDirectory() stringByAppendingPathComponent:@"Documents/Movie.m4v"];
+    
     unlink([filePath UTF8String]);
     //    NSURL *movieURL = [[NSURL alloc] initWithString:filePath];
     NSURL *movieURL = [NSURL fileURLWithPath:filePath];
@@ -592,8 +526,10 @@ typedef enum {
     [_movieFile startProcessing];
     
     [_movieWriter setCompletionBlock:^{
+        
         choosmedia.hidden =NO;
         castMidea.hidden =NO;
+        
         [_filter removeTarget:_movieWriter];
         [_movieWriter finishRecording];
         
@@ -602,15 +538,13 @@ typedef enum {
 
 
 
--(void) toonVideo:( NSURL *)sampleURL
-             radins: (float) rad
-         videoWidth:(int)width
-      videoHheightt:(int)Height{
+-(void) toonVideo: (NSURL *)sampleURL
+           radins: (float) rad
+       videoWidth: (int)width
+    videoHheightt: (int)Height{
     
     NSString *filePath = [NSTemporaryDirectory() stringByAppendingPathComponent:_theFileName];
-    // NSURL *sampleURL = [NSURL fileURLWithPath:filePath];
-    
-    
+   
     
     _movieFile = [[GPUImageMovie alloc] initWithURL:sampleURL];
     _movieFile.runBenchmark = YES;
@@ -620,9 +554,8 @@ typedef enum {
     GPUImageFilterGroup* filterG = [[GPUImageFilterGroup alloc] init];
     
     
-    filter = [[GPUImageTransformFilter alloc] init];
+    filter  = [[GPUImageTransformFilter alloc] init];
     filter2 = [[GPUImageSmoothToonFilter alloc] init];
-    
     
     
     [filter setAffineTransform:CGAffineTransformMakeRotation(rad)];
@@ -633,13 +566,13 @@ typedef enum {
     [(GPUImageFilterGroup *)filterG setInitialFilters:[NSArray arrayWithObject:filter]];
     [(GPUImageFilterGroup *)filterG setTerminalFilter:filter2];
     
-    //[filterG addFilter:filter];
+   
     [_movieFile addTarget:filterG];
     _theFileName = @"temp.m4v";
     filePath = [NSTemporaryDirectory() stringByAppendingPathComponent:_theFileName];
-    //filePath = [NSHomeDirectory() stringByAppendingPathComponent:@"Documents/Movie.m4v"];
+   
     unlink([filePath UTF8String]);
-    //    NSURL *movieURL = [[NSURL alloc] initWithString:filePath];
+   
     NSURL *movieURL = [NSURL fileURLWithPath:filePath];
     
     //    _movieWriter = [[GPUImageMovieWriter alloc] initWithMovieURL:movieURL size:CGSizeMake(1280 , 720)];
@@ -671,14 +604,12 @@ typedef enum {
 
 -(void) rotateVideo:( NSURL *)sampleURL
               radins: (float) rad
-              videoWidth:(int)width
-              videoHheightt:(int)Height{
+          videoWidth:(int)width
+        videoHheightt:(int)Height{
 
-castMidea.hidden =YES;
+    castMidea.hidden =YES;
     
     NSString *filePath = [NSTemporaryDirectory() stringByAppendingPathComponent:_theFileName];
-   // NSURL *sampleURL = [NSURL fileURLWithPath:filePath];
-    
     _movieFile = [[GPUImageMovie alloc] initWithURL:sampleURL];
     _movieFile.runBenchmark = YES;
     _movieFile.playAtActualSpeed = YES;
@@ -687,16 +618,13 @@ castMidea.hidden =YES;
     if (!rad)
     {
         [self copyVideoToTemp:sampleURL];
-
         choosmedia.hidden =NO;
-        castMidea.hidden =NO;
-
-        return;
+         castMidea.hidden =NO;
+        
+      return;
     }
     
     filter = [[GPUImageTransformFilter alloc] init];
-    
-    
     
     
     [filter setAffineTransform:CGAffineTransformMakeRotation(rad)];
@@ -716,17 +644,16 @@ castMidea.hidden =YES;
         
     [filter addTarget:_movieWriter];
     
-    // Configure this for video from the movie file, where we want to preserve all video frames and audio samples
     _movieWriter.shouldPassthroughAudio = YES;
     _movieFile.audioEncodingTarget = _movieWriter;
     [_movieFile enableSynchronizedEncodingUsingMovieWriter:_movieWriter];
-    
     [_movieWriter startRecording];
     [_movieFile startProcessing];
     
     [_movieWriter setCompletionBlock:^{
-        choosmedia.hidden =NO;
-        castMidea.hidden =NO;
+        
+        choosmedia.hidden = NO;
+        castMidea.hidden  = NO;
         [_filter removeTarget:_movieWriter];
         [_movieWriter finishRecording];
         
@@ -735,172 +662,9 @@ castMidea.hidden =YES;
 }
 
 
--(void) rotateVideo:(float)rad{
-    
-    
-    NSString *filePath = [NSTemporaryDirectory() stringByAppendingPathComponent:_theFileName];
-    NSURL *sampleURL = [NSURL fileURLWithPath:filePath];
-    
-    _movieFile = [[GPUImageMovie alloc] initWithURL:sampleURL];
-    _movieFile.runBenchmark = YES;
-    _movieFile.playAtActualSpeed = NO;
-    GPUImageTransformFilter *filter ;
- 
-    
-    
-    filter = [[GPUImageTransformFilter alloc] init];
-
-    
-    
-    
-    [filter setAffineTransform:CGAffineTransformMakeRotation(rad)];
-    
-    [_movieFile addTarget:filter];
-    _theFileName = @"temp.m4v";
-    filePath = [NSTemporaryDirectory() stringByAppendingPathComponent:_theFileName];
-   
-    unlink([filePath UTF8String]);
-   
-    NSURL *movieURL = [NSURL fileURLWithPath:filePath];
-    
-    
-    _movieWriter = [[GPUImageMovieWriter alloc] initWithMovieURL:movieURL size:CGSizeMake(720 , 720)];
-    [filter addTarget:_movieWriter];
-    
-    // Configure this for video from the movie file, where we want to preserve all video frames and audio samples
-    _movieWriter.shouldPassthroughAudio = YES;
-    _movieFile.audioEncodingTarget = _movieWriter;
-    [_movieFile enableSynchronizedEncodingUsingMovieWriter:_movieWriter];
-    
-    [_movieWriter startRecording];
-    [_movieFile startProcessing];
-    
-    [_movieWriter setCompletionBlock:^{
-        [_filter removeTarget:_movieWriter];
-        [_movieWriter finishRecording];
-        
-        choosmedia.hidden =NO;
-        castMidea.hidden =NO;
-    }];
-}
-
-
-
--(void) rotateVideo2:(float)rad{
-    
-
-     NSString *filePath = [NSTemporaryDirectory() stringByAppendingPathComponent:_theFileName];
-    NSURL *sampleURL = [NSURL fileURLWithPath:filePath];
-  
-    _movieFile = [[GPUImageMovie alloc] initWithURL:sampleURL];
-    _movieFile.runBenchmark = YES;
-    _movieFile.playAtActualSpeed = NO;
-    GPUImageTransformFilter *filter ;
-    GPUImageSketchFilter *filter2 ;
-    GPUImageFilterGroup* filterG = [[GPUImageFilterGroup alloc] init];
-    
-    
-    filter = [[GPUImageTransformFilter alloc] init];
-    filter2 = [[GPUImageSketchFilter alloc] init];
-    
-   
-    
-    [filter setAffineTransform:CGAffineTransformMakeRotation(rad)];
-    [filterG  addFilter:filter];
-    [filterG  addFilter:filter2];
-   
-    [filter addTarget:filter2];
-    [(GPUImageFilterGroup *)filterG setInitialFilters:[NSArray arrayWithObject:filter]];
-    [(GPUImageFilterGroup *)filterG setTerminalFilter:filter2];
-    
-    //[filterG addFilter:filter];
-    [_movieFile addTarget:filterG];
-    _theFileName = @"temp.m4v";
-    filePath = [NSTemporaryDirectory() stringByAppendingPathComponent:_theFileName];
-    //filePath = [NSHomeDirectory() stringByAppendingPathComponent:@"Documents/Movie.m4v"];
-    unlink([filePath UTF8String]);
-//    NSURL *movieURL = [[NSURL alloc] initWithString:filePath];
-     NSURL *movieURL = [NSURL fileURLWithPath:filePath];
-    
-//    _movieWriter = [[GPUImageMovieWriter alloc] initWithMovieURL:movieURL size:CGSizeMake(1280 , 720)];
-    _movieWriter = [[GPUImageMovieWriter alloc] initWithMovieURL:movieURL size:CGSizeMake(1920 , 1080)];
-    [filterG addTarget:_movieWriter];
-    
-    // Configure this for video from the movie file, where we want to preserve all video frames and audio samples
-    _movieWriter.shouldPassthroughAudio = YES;
-    _movieFile.audioEncodingTarget = _movieWriter;
-    [_movieFile enableSynchronizedEncodingUsingMovieWriter:_movieWriter];
-    
-    [_movieWriter startRecording];
-    [_movieFile startProcessing];
-    
-    [_movieWriter setCompletionBlock:^{
-        [_filter removeTarget:_movieWriter];
-        [_movieWriter finishRecording];
-    }];
-}
-
-
-- (void)imagePickerController:(UIImagePickerController *)picker didFinishPickingMediaWithInfo:(NSDictionary *)info {
-    NSString *mediaType = [info objectForKey: UIImagePickerControllerMediaType];
-    
-    if (CFStringCompare ((__bridge CFStringRef) mediaType, kUTTypeMovie, 0) == kCFCompareEqualTo) {
-        
-        
-    /*    NSURL *videoURL = [info objectForKey:UIImagePickerControllerMediaURL];
-        
-        NSData *videoData = [NSData dataWithContentsOfURL:videoURL];
-        NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
-        NSString *documentsDirectory = [paths objectAtIndex:0];
-        NSString *tempPath = [documentsDirectory stringByAppendingFormat:@"/vid1.mp4"];
-        
-        BOOL success = [videoData writeToFile:tempPath atomically:NO];
-        
-      */
-        
-        
-        
-        
-        NSString *moviePath = [[info objectForKey:UIImagePickerControllerMediaURL] path];
-        // NSLog(@"%@",moviePath);
-        NSURL *videoUrl=(NSURL*)[info objectForKey:UIImagePickerControllerMediaURL];
-        
-        if (UIVideoAtPathIsCompatibleWithSavedPhotosAlbum (moviePath)) {
-         //dmd   UISaveVideoAtPathToSavedPhotosAlbum (moviePath, nil, nil, nil);
-          //  theFileName = [[string lastPathComponent] moviePath];
-           // _theFileName = [[moviePath lastPathComponent] stringByDeletingPathExtension];
-            NSURL *mediaURL; // Your video's URL
-            AVURLAsset *asset = [AVURLAsset URLAssetWithURL:videoUrl options:nil];
-            NSArray *tracks = [asset tracksWithMediaType:AVMediaTypeVideo];
-            AVAssetTrack *track = [tracks objectAtIndex:0];
- //           int orientation = [[asset valueForProperty:ALAssetPropertyOrientation] intValue];
-            CGSize mediaSize = track.naturalSize;
-            NSLog(@"videosize %d  %d",(int)mediaSize.height, (int)mediaSize.width);
-            _theFileName = [moviePath lastPathComponent];
-            
-            NSLog(_theFileName);
-            
-            CGAffineTransform txf       = [track preferredTransform];
-            float  videoAngleInDegree  = (atan2(txf.b, txf.a));
-         //   [self dismissModalViewControllerAnimated:YES];
-       //     [self rotateVideo2:videoAngleInDegree videoHheightt:mediaSize.height videoWidth:mediaSize.width ];
-            [self dismissModalViewControllerAnimated:YES];
-
-            
-            
-            
-            
-
-            
-        }
-    }
-    
-   
-
-}
 
 //Cast video
-- (IBAction)castVideo2:(id)sender {
+- (IBAction)castVideo22:(id)sender {
   NSLog(@"Cast Video");
 
   //Show alert if not connected
@@ -918,94 +682,51 @@ castMidea.hidden =YES;
   //Define Media metadata
   GCKMediaMetadata *metadata = [[GCKMediaMetadata alloc] init];
 
-/*  [metadata setString:@"Big Buck Bunny (2008)" forKey:kGCKMetadataKeyTitle];
-
-  [metadata setString:@"Big Buck Bunny tells the story of a giant rabbit with a heart bigger than "
-                       "himself. When one sunny day three rodents rudely harass him, something "
-                       "snaps... and the rabbit ain't no bunny anymore! In the typical cartoon "
-                       "tradition he prepares the nasty rodents a comical revenge."
-               forKey:kGCKMetadataKeySubtitle];
-
-  [metadata addImage:[[GCKImage alloc]
-      initWithURL:[[NSURL alloc] initWithString:@"http://commondatastorage.googleapis.com/"
-                                                 "gtv-videos-bucket/sample/images/BigBuckBunny.jpg"]
- 
-    //  initWithURL:[[NSURL alloc] initWithString:@"https://s3.amazonaws.com/vushaper/0e25ab6e098e3c9fee8b29b7d250215d_1.jpg" ]
-            width:480
-           height:360]];
-*/
   //define Media information
   GCKMediaInformation *mediaInformation =
-      [[GCKMediaInformation alloc] initWithContentID:
-      // @"https://s3.amazonaws.com/vushaper/0e25ab6e098e3c9fee8b29b7d250215d.mp4"
-      // @"https://s3.amazonaws.com/vushaper/110dc4040afa22c968b20c0b72dafc2d.mp4"
-       //@"https://s3.amazonaws.com/vushaper/00e69baa442cd0f80ed4968efad7ab17.m3u8"
-           //  @"http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4"
-                        @"https://s3.amazonaws.com/vushaper/00e69baa442cd0f80ed4968efad7ab17.m3u8"
-                                          streamType:GCKMediaStreamTypeLive
-                                         contentType:@"application/x-mpegURL"
-                                            metadata:metadata
-                                      streamDuration:0
-                                          customData:nil];
+ [[GCKMediaInformation alloc] initWithContentID:
+       
+       /*   CORS permission on AWS s3   is needed for live streaming
+        <?xml version="1.0" encoding="UTF-8"?>
+        <CORSConfiguration xmlns="http://s3.amazonaws.com/doc/2006-03-01/">
+        <CORSRule>
+        <AllowedOrigin>*</AllowedOrigin>
+        <AllowedMethod>GET</AllowedMethod>
+        <MaxAgeSeconds>3000</MaxAgeSeconds>
+        <AllowedHeader>Content-Type</AllowedHeader>
+        </CORSRule>
+        </CORSConfiguration>
+*/
+                                        @"https://s3.amazonaws.com/vushaper/00e69baa442cd0f80ed4968efad7ab17.m3u8"
+                                        streamType:GCKMediaStreamTypeLive
+                                        contentType:@"application/x-mpegURL"
+                                        metadata:metadata
+                                        streamDuration:0
+                                        customData:nil];
 
-  //cast video
+
   [_mediaControlChannel loadMedia:mediaInformation autoplay:TRUE playPosition:0];
 
 }
-- (IBAction)castVideo22:(id)sender {
+
+- (IBAction)castVideo2:(id)sender {
     NSLog(@"Cast Video");
     GCKMediaMetadata *metadata = [[GCKMediaMetadata alloc] init];
-/*    //Show alert if not connected
-    if (!self.deviceManager || !self.deviceManager.isConnected) {
-        UIAlertView *alert =
-        [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"Not Connected", nil)
-                                   message:NSLocalizedString(@"Please connect to Cast device", nil)
-                                  delegate:nil
-                         cancelButtonTitle:NSLocalizedString(@"OK", nil)
-                         otherButtonTitles:nil];
-        [alert show];
-        return;
-    }
-    
-    //Define Media metadata
+  
  
-    
-    [metadata setString:@"Big Buck Bunny (2008)" forKey:kGCKMetadataKeyTitle];
-    
-    [metadata setString:@"Big Buck Bunny tells the story of a giant rabbit with a heart bigger than "
-     "himself. When one sunny day three rodents rudely harass him, something "
-     "snaps... and the rabbit ain't no bunny anymore! In the typical cartoon "
-     "tradition he prepares the nasty rodents a comical revenge."
-                 forKey:kGCKMetadataKeySubtitle];
-    
-    [metadata addImage:[[GCKImage alloc]
-                              initWithURL:[[NSURL alloc] initWithString:@"http://commondatastorage.googleapis.com/"
-                                                                       "gtv-videos-bucket/sample/images/BigBuckBunny.jpg"]
-                //        initWithURL:[[NSURL alloc] initWithString:@"https://s3.amazonaws.com/vushaper/0e25ab6e098e3c9fee8b29b7d250215d_1.jpg" ]
-                        width:480
-                        height:360]];
-  */
-    //define Media information
-    NSLog(@"Started HTTP Server on ip %@", [self getIPAddress:TRUE]);
     NSString * url = [NSString stringWithFormat:@"%@%@%@",@"http:\\",[self getIPAddress:TRUE],@":8080/temp.m4v"];
-//NSString * url = [self getIPAddress:TRUE];
-//    url = [url stringByAppendingPathComponent:@":8080/temp.m4v"];;
     NSLog(@"Started HTTP Server on url %@", url);
 
      GCKMediaInformation *mediaInformation =
      [[GCKMediaInformation alloc] initWithContentID:
-     // @"https://s3.amazonaws.com/vushaper/0e25ab6e098e3c9fee8b29b7d250215d.mp4"
-     //@" http://192.168.1.5:8080/trim.yRttUC.MOV"
      url
-      //dmd @"https://s3.amazonaws.com/vushaper/110dc4040afa22c968b20c0b72dafc2d.mp4"
-     //@"https://s3.amazonaws.com/vushaper/00e69baa442cd0f80ed4968efad7ab17.m3u8"
-     //     @"http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4"
      streamType:GCKMediaStreamTypeNone
      contentType:@"video/mp4"
      metadata:metadata
      streamDuration:0
      customData:nil];
-    NSLog(@"Medialurl = %@",url);
+    
+     NSLog(@"Medialurl = %@",url);
      
      //cast video
      [_mediaControlChannel loadMedia:mediaInformation autoplay:TRUE playPosition:0];
@@ -1114,6 +835,8 @@ castMidea.hidden =YES;
                                         otherButtonTitles:nil];
   [alert show];
 }
+
+//dmd this needs to be moved
 
 #include <ifaddrs.h>
 #include <arpa/inet.h>
