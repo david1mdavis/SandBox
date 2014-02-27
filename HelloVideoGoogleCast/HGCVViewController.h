@@ -66,6 +66,7 @@
 	MPMediaItemCollection		*userMediaItemCollection;
 	UIImage						*noArtworkImage;
 	NSTimer						*backgroundColorTimer;
+    __weak IBOutlet UITextField *CastURL;
 
 }
 

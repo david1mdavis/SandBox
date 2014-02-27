@@ -159,18 +159,18 @@ static NSString *const kReceiverAppID = @"9D100972";
     AVAssetExportSession *exporter = [[AVAssetExportSession alloc] initWithAsset: songAsset
                                                                       presetName: AVAssetExportPresetPassthrough];
     
-    exporter.outputFileType = @"public.mpeg-4";
+    exporter.outputFileType = @"com.apple.quicktime-movie";
     
     
     NSFileManager *fileManager = [NSFileManager defaultManager];
    // NSString *documentsPath = [NSTemporaryDirectory(), NSUserDomainMask, YES) objectAtIndex:0];
     
-    NSString *filePath = [NSTemporaryDirectory() stringByAppendingPathComponent:@"exported.mp4"];
+    NSString *filePath = [NSTemporaryDirectory() stringByAppendingPathComponent:@"exported.mov"];
     NSError *error;
     BOOL success = [fileManager removeItemAtPath:filePath error:&error];
     
     NSString *exportFile = [NSTemporaryDirectory() stringByAppendingPathComponent:
-                            @"exported.mp4"];
+                            @"exported.mov"];
     
     NSURL *exportURL = [NSURL fileURLWithPath:exportFile] ;
     exporter.outputURL = exportURL;
@@ -180,9 +180,9 @@ static NSString *const kReceiverAppID = @"9D100972";
     [exporter exportAsynchronouslyWithCompletionHandler:
      ^{
          NSData *data = [NSData dataWithContentsOfFile: [NSTemporaryDirectory()
-                                                         stringByAppendingPathComponent: @"exported.mp4"]];
+                                                         stringByAppendingPathComponent: @"exported.mov"]];
          
-         [self casttexported_mp4];
+         [self casttexported_mov];
          
      }];
 }
@@ -866,13 +866,13 @@ typedef enum {
   [_mediaControlChannel loadMedia:mediaInformation autoplay:TRUE playPosition:0];
 
 }
--(void)casttexported_mp4
+-(void)casttexported_mov
 {
     NSLog(@"Cast Video");
     GCKMediaMetadata *metadata = [[GCKMediaMetadata alloc] init];
     
     
-    NSString * url = [NSString stringWithFormat:@"%@%@%@",@"http://",[self getIPAddress:TRUE],@":8080/exported.mp4"];
+    NSString * url = [NSString stringWithFormat:@"%@%@%@",@"http://",[self getIPAddress:TRUE],@":8080/exported.mov"];
     NSLog(@"Started HTTP Server on url %@", url);
     
     GCKMediaInformation *mediaInformation =
@@ -915,8 +915,27 @@ typedef enum {
 }
 
 - (IBAction)castVideo2:(id)sender {
-    [self casttemp_m4v];
+    
+    NSLog(@"Cast Video");
+    GCKMediaMetadata *metadata = [[GCKMediaMetadata alloc] init];
+    
+    
    
+    NSLog(@"Started HTTP Server on url %@", CastURL.text);
+    
+    GCKMediaInformation *mediaInformation =
+    [[GCKMediaInformation alloc] initWithContentID:
+                                        CastURL.text
+                                        streamType:GCKMediaStreamTypeNone
+                                       contentType:@"video/mp4"
+                                          metadata:metadata
+                                    streamDuration:0
+                                        customData:nil];
+    
+      
+    //cast photo
+    //[_mediaControlChannel loadMedia:mediaInformation autoplay:TRUE playPosition:0];
+    [_mediaControlChannel loadMedia:mediaInformation ];
     
 }
 - (void)saveImage:(UIImage *)image withName:(NSString *)name {
