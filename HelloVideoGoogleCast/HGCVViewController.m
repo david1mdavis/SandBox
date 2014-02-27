@@ -38,10 +38,154 @@ static NSString *const kReceiverAppID = @"9D100972";
 @property(nonatomic, strong) GPUImageOutput<GPUImageInput> *filter;
 @property(nonatomic, strong) GPUImageMovieWriter *movieWriter;
 @property(nonatomic,retain) IBOutlet UISegmentedControl *filterSegment;
-
+@property(nonatomic, strong) NSTimer*  nst_Timer;
+@property(nonatomic, strong)  ELCImagePickerController *elcPicker;
 @end
 
 @implementation HGCVViewController
+
+
+// Invoked when the user taps the Done button in the table view.
+- (void) musicTableViewControllerDidFinish: (MusicTableViewController *) controller {
+	
+	[self dismissModalViewControllerAnimated: YES];
+}
+
+
+- (IBAction) PickMusic: (id) sender {
+    
+	// if the user has already chosen some music, display that list
+	if (userMediaItemCollection) {
+        
+		MusicTableViewController *controller = [[MusicTableViewController alloc] initWithNibName: @"MusicTableView" bundle: nil];
+		controller.delegate = self;
+		
+		controller.modalTransitionStyle = UIModalTransitionStyleCoverVertical;
+		
+		[self presentModalViewController: controller animated: YES];
+		
+        
+        // else, if no music is chosen yet, display the media item picker
+	} else {
+        
+		MPMediaPickerController *picker =
+        [[MPMediaPickerController alloc] initWithMediaTypes: MPMediaTypeMusic];
+		
+		picker.delegate						= self;
+		picker.allowsPickingMultipleItems	= NO;
+		picker.prompt						= NSLocalizedString (@"Add songs to play", "Prompt in media item picker");
+		
+		// The media item picker uses the default UI style, so it needs a default-style
+		//		status bar to match it visually
+		[[UIApplication sharedApplication] setStatusBarStyle: UIStatusBarStyleDefault animated: YES];
+		
+		[self presentModalViewController: picker animated: YES];
+		
+	}
+}
+- (void)mediaPicker:(MPMediaPickerController *)mediaPicker didPickMediaItems:(MPMediaItemCollection *)mediaItemCollection
+{
+  //  [player setQueueWithItemCollection:mediaItemCollection];
+    
+   
+	MPMediaItem *currentItem = (MPMediaItem *)[mediaItemCollection.items objectAtIndex: 0];
+    NSURL *url = [currentItem valueForProperty: MPMediaItemPropertyAssetURL];
+    [self mediaItemToData:url];
+
+    
+    [self dismissModalViewControllerAnimated:YES];
+}
+
+- (void)mediaPickerDidCancel:(MPMediaPickerController *)mediaPicker
+{
+    [self dismissModalViewControllerAnimated:YES];
+}
+
+- (IBAction)PickMusic1:(id)sender {
+    
+    
+    NSString * url = [@"http://192.168.1.5:8080" stringByAppendingPathComponent:@"stream/index.m3u8"];;
+    NSLog(@"%@",url);
+    //Define Media metadata
+    GCKMediaMetadata *metadata = [[GCKMediaMetadata alloc] init];
+    
+    //define Media information
+    GCKMediaInformation *mediaInformation =
+    [[GCKMediaInformation alloc] initWithContentID:
+     
+     /*   CORS permission on AWS s3   is needed for live streaming
+      <?xml version="1.0" encoding="UTF-8"?>
+      <CORSConfiguration xmlns="http://s3.amazonaws.com/doc/2006-03-01/">
+      <CORSRule>
+      <AllowedOrigin>*</AllowedOrigin>
+      <AllowedMethod>GET</AllowedMethod>
+      <MaxAgeSeconds>3000</MaxAgeSeconds>
+      <AllowedHeader>Content-Type</AllowedHeader>
+      </CORSRule>
+      </CORSConfiguration>
+      */
+     //      @"https://s3.amazonaws.com/vushaper/00e69baa442cd0f80ed4968efad7ab17.m3u8"
+     @"https://s3.amazonaws.com/vushaper/000000.mp4"
+                                        streamType:GCKMediaStreamTypeNone
+                                       contentType:@"application/mp4"
+                                          metadata:metadata
+                                    streamDuration:0
+                                        customData:nil];
+    
+    
+    [_mediaControlChannel loadMedia:mediaInformation autoplay:TRUE playPosition:0];
+    
+
+    
+    
+    
+    
+    NSString  *  path =	@"ipod-library://item/item.mp3?id=-4611403179073443660";
+    NSString * musicstring =	@"ipod-library://item/item.m4a?id=956928820068985579";
+    NSURL *outputURL = [NSURL fileURLWithPath:musicstring];
+    [self mediaItemToData:outputURL];
+
+}
+-(void)mediaItemToData:( NSURL *)url
+{
+    // Implement in your project the media item picker
+    
+   
+    
+//    NSURL *url = [curItem valueForProperty: MPMediaItemPropertyAssetURL];
+    
+    AVURLAsset *songAsset = [AVURLAsset URLAssetWithURL: url options:nil];
+    
+    AVAssetExportSession *exporter = [[AVAssetExportSession alloc] initWithAsset: songAsset
+                                                                      presetName: AVAssetExportPresetPassthrough];
+    
+    exporter.outputFileType = @"public.mpeg-4";
+    
+    
+    NSFileManager *fileManager = [NSFileManager defaultManager];
+   // NSString *documentsPath = [NSTemporaryDirectory(), NSUserDomainMask, YES) objectAtIndex:0];
+    
+    NSString *filePath = [NSTemporaryDirectory() stringByAppendingPathComponent:@"exported.mp4"];
+    NSError *error;
+    BOOL success = [fileManager removeItemAtPath:filePath error:&error];
+    
+    NSString *exportFile = [NSTemporaryDirectory() stringByAppendingPathComponent:
+                            @"exported.mp4"];
+    
+    NSURL *exportURL = [NSURL fileURLWithPath:exportFile] ;
+    exporter.outputURL = exportURL;
+    
+    // do the export
+    // (completion handler block omitted)
+    [exporter exportAsynchronouslyWithCompletionHandler:
+     ^{
+         NSData *data = [NSData dataWithContentsOfFile: [NSTemporaryDirectory()
+                                                         stringByAppendingPathComponent: @"exported.mp4"]];
+         
+         [self casttexported_mp4];
+         
+     }];
+}
 
 - (void)viewDidLoad {
   [super viewDidLoad];
@@ -285,14 +429,22 @@ static NSString *const kReceiverAppID = @"9D100972";
          handler(exportSession);
               }];
 }
+-(void) showTime{
+    [self drawScreentoFile];
+    [self castVideoPicker];
+    
+}
 
 -(void)video {
-    ELCImagePickerController *elcPicker = [[ELCImagePickerController alloc] initVideoPicker];
-    elcPicker.maximumImagesCount = 1;
-    elcPicker.returnsOriginalImage = NO; //Only return the fullScreenImage, not the fullResolutionImage
-	elcPicker.imagePickerDelegate = self;
     
-    [self presentViewController:elcPicker animated:YES completion:nil];
+   // _nst_Timer = [NSTimer scheduledTimerWithTimeInterval:3 target:self selector:@selector(showTime) userInfo:nil repeats:YES];
+
+    _elcPicker = [[ELCImagePickerController alloc] initVideoPicker];
+    _elcPicker.maximumImagesCount = 1;
+    _elcPicker.returnsOriginalImage = NO; //Only return the fullScreenImage, not the fullResolutionImage
+	_elcPicker.imagePickerDelegate = self;
+    
+    [self presentViewController:_elcPicker animated:YES completion:nil];
 
     
 }
@@ -415,6 +567,9 @@ ALAssetsLibrary *assetLibrary=[[ALAssetsLibrary alloc] init];
 
 - (void)elcImagePickerControllerDidCancel:(ELCImagePickerController *)picker
 {
+    [_nst_Timer invalidate];
+     _nst_Timer = nil;
+
     [self dismissViewControllerAnimated:YES completion:nil];
 }
 
@@ -663,8 +818,9 @@ typedef enum {
 
 
 
+
 //Cast video
-- (IBAction)castVideo2:(id)sender {
+- (IBAction)castVideo22:(id)sender {
   NSLog(@"Cast Video");
 
   //Show alert if not connected
@@ -710,28 +866,99 @@ typedef enum {
   [_mediaControlChannel loadMedia:mediaInformation autoplay:TRUE playPosition:0];
 
 }
-
-- (IBAction)castVideo22:(id)sender {
+-(void)casttexported_mp4
+{
     NSLog(@"Cast Video");
     GCKMediaMetadata *metadata = [[GCKMediaMetadata alloc] init];
-  
- 
+    
+    
+    NSString * url = [NSString stringWithFormat:@"%@%@%@",@"http://",[self getIPAddress:TRUE],@":8080/exported.mp4"];
+    NSLog(@"Started HTTP Server on url %@", url);
+    
+    GCKMediaInformation *mediaInformation =
+    [[GCKMediaInformation alloc] initWithContentID:
+     url
+                                        streamType:GCKMediaStreamTypeNone
+                                       contentType:@"video/mp4"
+                                          metadata:metadata
+                                    streamDuration:0
+                                        customData:nil];
+    
+    NSLog(@"Medialurl = %@",url);
+    
+    //cast video
+    [_mediaControlChannel loadMedia:mediaInformation autoplay:TRUE playPosition:0];
+
+}
+
+-(void) casttemp_m4v{
+    NSLog(@"Cast Video");
+    GCKMediaMetadata *metadata = [[GCKMediaMetadata alloc] init];
+    
+    
+    NSString * url = [NSString stringWithFormat:@"%@%@%@",@"http://",[self getIPAddress:TRUE],@":8080/temp.m4v"];
+    NSLog(@"Started HTTP Server on url %@", url);
+    
+    GCKMediaInformation *mediaInformation =
+    [[GCKMediaInformation alloc] initWithContentID:
+     url
+                                        streamType:GCKMediaStreamTypeNone
+                                       contentType:@"video/mp4"
+                                          metadata:metadata
+                                    streamDuration:0
+                                        customData:nil];
+    
+    NSLog(@"Medialurl = %@",url);
+    
+    //cast video
+    [_mediaControlChannel loadMedia:mediaInformation autoplay:TRUE playPosition:0];
+}
+
+- (IBAction)castVideo2:(id)sender {
+    [self casttemp_m4v];
+   
+    
+}
+- (void)saveImage:(UIImage *)image withName:(NSString *)name {
+    NSData *data = UIImageJPEGRepresentation(image, 1.0);
+    NSFileManager *fileManager = [NSFileManager defaultManager];
+    NSString *fullPath = [NSTemporaryDirectory() stringByAppendingPathComponent:name];
+    [fileManager createFileAtPath:fullPath contents:data attributes:nil];
+}
+
+- (void)drawScreentoFile {
+    _theFileName = @"temp.m4v";
+    UIGraphicsBeginImageContext(self.view.bounds.size);
+    [_elcPicker.view.layer renderInContext:UIGraphicsGetCurrentContext()];
+    UIImage *viewImage = UIGraphicsGetImageFromCurrentImageContext();
+    [self saveImage:viewImage withName:_theFileName];
+    UIGraphicsEndImageContext();
+}
+
+
+
+- (void)castVideoPicker {
+    NSLog(@"Cast Video");
+    GCKMediaMetadata *metadata = [[GCKMediaMetadata alloc] init];
+    
+    
     NSString * url = [NSString stringWithFormat:@"%@%@%@",@"http:\\",[self getIPAddress:TRUE],@":8080/temp.m4v"];
     NSLog(@"Started HTTP Server on url %@", url);
-
-     GCKMediaInformation *mediaInformation =
-     [[GCKMediaInformation alloc] initWithContentID:
-     url
-     streamType:GCKMediaStreamTypeNone
-     contentType:@"video/mp4"
-     metadata:metadata
-     streamDuration:0
-     customData:nil];
     
-     NSLog(@"Medialurl = %@",url);
-     
-     //cast video
-     [_mediaControlChannel loadMedia:mediaInformation autoplay:TRUE playPosition:0];
+    GCKMediaInformation *mediaInformation =
+    [[GCKMediaInformation alloc] initWithContentID:
+                                                    url
+                                        streamType:GCKMediaStreamTypeNone
+                                       contentType:@"image/jpeg"
+                                          metadata:metadata
+                                    streamDuration:0
+                                        customData:nil];
+    
+    NSLog(@"Medialurl = %@",url);
+    
+    //cast photo
+    //[_mediaControlChannel loadMedia:mediaInformation autoplay:TRUE playPosition:0];
+    [_mediaControlChannel loadMedia:mediaInformation ];
     
 }
 

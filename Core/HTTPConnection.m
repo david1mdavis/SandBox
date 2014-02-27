@@ -1683,8 +1683,8 @@ static NSMutableArray *recentNonces;
 	// Override me to provide custom responses.
 	
 	//NSString *filePath = [self filePathForURI:path allowDirectory:NO];
-   NSString *filePath = [self filePathForURI:path allowDirectory:YES];
-  //dmd   NSString *filePath = [NSTemporaryDirectory() stringByAppendingPathComponent:path];
+  //dmd NSString *filePath = [self filePathForURI:path allowDirectory:YES];
+     NSString *filePath = [NSTemporaryDirectory() stringByAppendingPathComponent:path];
 	BOOL isDir = NO;
 	
 	if (filePath && [[NSFileManager defaultManager] fileExistsAtPath:filePath isDirectory:&isDir] && !isDir)

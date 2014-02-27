@@ -7,6 +7,11 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		876967A818BF32A000798671 /* MusicTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 876967A718BF32A000798671 /* MusicTableViewController.m */; };
+		876967AA18BF32D700798671 /* MusicTableView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 876967A918BF32D700798671 /* MusicTableView.xib */; };
+		876967AC18BF32E500798671 /* no_artwork.png in Resources */ = {isa = PBXBuildFile; fileRef = 876967AB18BF32E500798671 /* no_artwork.png */; };
+		876967AE18BF334B00798671 /* AudioToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 876967AD18BF334B00798671 /* AudioToolbox.framework */; };
+		876967B018BF335F00798671 /* MediaPlayer.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 876967AF18BF335E00798671 /* MediaPlayer.framework */; };
 		8793651318B8251700AD0B3C /* CoreMedia.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8793651218B8251700AD0B3C /* CoreMedia.framework */; };
 		8793651518B8252A00AD0B3C /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8793651418B8252A00AD0B3C /* QuartzCore.framework */; };
 		8793651718B8255500AD0B3C /* OpenGLES.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8793651618B8255500AD0B3C /* OpenGLES.framework */; };
@@ -91,6 +96,12 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		876967A618BF329500798671 /* MusicTableViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MusicTableViewController.h; sourceTree = "<group>"; };
+		876967A718BF32A000798671 /* MusicTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MusicTableViewController.m; sourceTree = "<group>"; };
+		876967A918BF32D700798671 /* MusicTableView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = MusicTableView.xib; sourceTree = "<group>"; };
+		876967AB18BF32E500798671 /* no_artwork.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = no_artwork.png; sourceTree = "<group>"; };
+		876967AD18BF334B00798671 /* AudioToolbox.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AudioToolbox.framework; path = System/Library/Frameworks/AudioToolbox.framework; sourceTree = SDKROOT; };
+		876967AF18BF335E00798671 /* MediaPlayer.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MediaPlayer.framework; path = System/Library/Frameworks/MediaPlayer.framework; sourceTree = SDKROOT; };
 		8793651218B8251700AD0B3C /* CoreMedia.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreMedia.framework; path = System/Library/Frameworks/CoreMedia.framework; sourceTree = SDKROOT; };
 		8793651418B8252A00AD0B3C /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
 		8793651618B8255500AD0B3C /* OpenGLES.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OpenGLES.framework; path = System/Library/Frameworks/OpenGLES.framework; sourceTree = SDKROOT; };
@@ -209,6 +220,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				876967B018BF335F00798671 /* MediaPlayer.framework in Frameworks */,
+				876967AE18BF334B00798671 /* AudioToolbox.framework in Frameworks */,
 				87F1D42F18BA12C400EB1C42 /* GoogleCast.framework in Frameworks */,
 				8793651718B8255500AD0B3C /* OpenGLES.framework in Frameworks */,
 				8793651518B8252A00AD0B3C /* QuartzCore.framework in Frameworks */,
@@ -237,6 +250,16 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		876967A518BF326C00798671 /* Music */ = {
+			isa = PBXGroup;
+			children = (
+				876967A718BF32A000798671 /* MusicTableViewController.m */,
+				876967A918BF32D700798671 /* MusicTableView.xib */,
+				876967A618BF329500798671 /* MusicTableViewController.h */,
+			);
+			name = Music;
+			sourceTree = "<group>";
+		};
 		8793651A18B9940B00AD0B3C /* ELCImagePicker */ = {
 			isa = PBXGroup;
 			children = (
@@ -419,6 +442,7 @@
 		879EDE3018B7155C006A1735 /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				876967AB18BF32E500798671 /* no_artwork.png */,
 				879EDE3118B71587006A1735 /* Web */,
 			);
 			name = Resources;
@@ -427,6 +451,7 @@
 		CC34F3C71885E326007E3FFC = {
 			isa = PBXGroup;
 			children = (
+				876967A518BF326C00798671 /* Music */,
 				8793651A18B9940B00AD0B3C /* ELCImagePicker */,
 				879EDE3018B7155C006A1735 /* Resources */,
 				879EDDF618B6DB5F006A1735 /* httpserver */,
@@ -449,6 +474,8 @@
 		CC34F3D21885E326007E3FFC /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				876967AF18BF335E00798671 /* MediaPlayer.framework */,
+				876967AD18BF334B00798671 /* AudioToolbox.framework */,
 				87F1D42E18BA12C400EB1C42 /* GoogleCast.framework */,
 				87F1D42A18BA11B000EB1C42 /* GPUImage.framework */,
 				8793651618B8255500AD0B3C /* OpenGLES.framework */,
@@ -594,10 +621,12 @@
 				8793653818B9945500AD0B3C /* ELCAlbumPickerController.xib in Resources */,
 				879EDE1C18B70A28006A1735 /* index.html in Resources */,
 				879EDE1D18B70A28006A1735 /* video.mp4 in Resources */,
+				876967AC18BF32E500798671 /* no_artwork.png in Resources */,
 				879EDE0918B6DB7D006A1735 /* About.txt in Resources */,
 				CC34F4111885E4B8007E3FFC /* icon-cast-identified.png in Resources */,
 				8793653918B9945500AD0B3C /* ELCAssetPicker.xib in Resources */,
 				8793653B18B9945500AD0B3C /* Overlay.png in Resources */,
+				876967AA18BF32D700798671 /* MusicTableView.xib in Resources */,
 				CC34F4101885E4B8007E3FFC /* icon-cast-connected@2x.png in Resources */,
 				CC34F40F1885E4B8007E3FFC /* icon-cast-connected.png in Resources */,
 				8793653C18B9945500AD0B3C /* Overlay@2x.png in Resources */,
@@ -661,6 +690,7 @@
 				CC34F3ED1885E326007E3FFC /* HGCVViewController.m in Sources */,
 				CC34F3E41885E326007E3FFC /* HGCVAppDelegate.m in Sources */,
 				8793653D18B9945500AD0B3C /* ELCImagePickerDemoAppDelegate.m in Sources */,
+				876967A818BF32A000798671 /* MusicTableViewController.m in Sources */,
 				CC34F3E01885E326007E3FFC /* main.m in Sources */,
 				8793653E18B9945500AD0B3C /* ELCImagePickerDemoViewController.m in Sources */,
 			);
