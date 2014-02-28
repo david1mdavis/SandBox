@@ -50,6 +50,15 @@ static NSString *const kReceiverAppID = @"9D100972";
 	
 	[self dismissModalViewControllerAnimated: YES];
 }
+- (IBAction)PickPhoto:(id)sender {
+    _elcPicker = [[ELCImagePickerController alloc] initImagePicker];
+    _elcPicker.maximumImagesCount = 1;
+    _elcPicker.returnsOriginalImage = NO; //Only return the fullScreenImage, not the fullResolutionImage
+	_elcPicker.imagePickerDelegate = self;
+    
+    [self presentViewController:_elcPicker animated:YES completion:nil];
+    
+}
 
 
 - (IBAction) PickMusic: (id) sender {
@@ -571,6 +580,8 @@ ALAssetsLibrary *assetLibrary=[[ALAssetsLibrary alloc] init];
      _nst_Timer = nil;
 
     [self dismissViewControllerAnimated:YES completion:nil];
+    choosmedia.hidden =NO;
+    castMidea.hidden =NO;
 }
 
 
@@ -687,6 +698,7 @@ typedef enum {
         
         [_filter removeTarget:_movieWriter];
         [_movieWriter finishRecording];
+        [self casttemp_m4v];
         
     }];
 }
@@ -750,6 +762,7 @@ typedef enum {
         castMidea.hidden =NO;
         [_filter removeTarget:_movieWriter];
         [_movieWriter finishRecording];
+        [self casttemp_m4v];
         
     }];
 }
@@ -775,6 +788,7 @@ typedef enum {
         [self copyVideoToTemp:sampleURL];
         choosmedia.hidden =NO;
          castMidea.hidden =NO;
+        [self casttemp_m4v];
         
       return;
     }
@@ -811,6 +825,7 @@ typedef enum {
         castMidea.hidden  = NO;
         [_filter removeTarget:_movieWriter];
         [_movieWriter finishRecording];
+        [self casttemp_m4v];
         
        
     }];
@@ -895,8 +910,9 @@ typedef enum {
     NSLog(@"Cast Video");
     GCKMediaMetadata *metadata = [[GCKMediaMetadata alloc] init];
     
-    
     NSString * url = [NSString stringWithFormat:@"%@%@%@",@"http://",[self getIPAddress:TRUE],@":8080/temp.m4v"];
+    
+
     NSLog(@"Started HTTP Server on url %@", url);
     
     GCKMediaInformation *mediaInformation =
