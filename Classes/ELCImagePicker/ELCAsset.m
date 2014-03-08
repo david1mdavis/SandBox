@@ -29,6 +29,17 @@
 
 - (void)setSelected:(BOOL)selected
 {
+    
+    if (selected) {
+        if ([_parent respondsToSelector:@selector(assetCast:)]) {
+            if ([_parent assetCast:self]) {
+                return;
+            }
+        }
+    }
+
+    
+    
     if (selected) {
         if ([_parent respondsToSelector:@selector(shouldSelectAsset:)]) {
             if (![_parent shouldSelectAsset:self]) {

@@ -113,7 +113,10 @@
 }
 
 - (void)doneAction:(id)sender
-{	
+{
+    [self dismissViewControllerAnimated:YES completion:nil];
+    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
+
 	NSMutableArray *selectedAssetsImages = [[NSMutableArray alloc] init];
 	    
 	for (ELCAsset *elcAsset in self.elcAssets) {
@@ -121,12 +124,28 @@
 			[selectedAssetsImages addObject:[elcAsset asset]];
 		}
 	}
+   
     [self.parent selectedAssets:selectedAssetsImages];
+        selectedAssetsImages =nil;
+        self.elcAssets= nil;
+        
+        });
+    
 }
 
+- (BOOL) assetCast:(ELCAsset *)asset
+{
+    BOOL didCast = YES;
+    if ([self.parent respondsToSelector:@selector(assetCast:)]) {
+        didCast = [self.parent assetCast:asset ];
+    }
+    return didCast;
+    
+}
 
 - (BOOL)shouldSelectAsset:(ELCAsset *)asset
 {
+    
     NSUInteger selectionCount = 0;
     for (ELCAsset *elcAsset in self.elcAssets) {
         if (elcAsset.selected) selectionCount++;
@@ -137,6 +156,7 @@
     }
     return shouldSelect;
 }
+
 
 - (void)assetSelected:(ELCAsset *)asset
 {

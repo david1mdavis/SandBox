@@ -98,6 +98,11 @@
 	[_parent selectedAssets:assets];
 }
 
+- (BOOL) assetCast:(ELCAsset *)asset
+{
+  return [_parent assetCast:asset];
+}
+
 #pragma mark -
 #pragma mark Table view data source
 

@@ -8,7 +8,7 @@
 
 #import <UIKit/UIKit.h>
 #import "ELCAssetSelectionDelegate.h"
-
+#import "ChromecastDeviceController.h"
 @class ELCImagePickerController;
 @class ELCAlbumPickerController;
 
@@ -23,10 +23,13 @@
  */
 - (void)elcImagePickerController:(ELCImagePickerController *)picker didFinishPickingMediaWithInfo:(NSArray *)info;
 
+
 /**
  * Called when image selection was cancelled, by tapping the 'Cancel' BarButtonItem.
  */
 - (void)elcImagePickerControllerDidCancel:(ELCImagePickerController *)picker;
+- (BOOL) assetCast:(NSMutableDictionary *)asset;
+
 
 @end
 
@@ -34,6 +37,8 @@
 
 @property (nonatomic, weak) id<ELCImagePickerControllerDelegate> imagePickerDelegate;
 @property (nonatomic, assign) NSInteger maximumImagesCount;
+@property BOOL oneAtaTime;
+//@property ChromecastDeviceController * chromecastController;
 
 /**
  * YES if the picker should return the original image,

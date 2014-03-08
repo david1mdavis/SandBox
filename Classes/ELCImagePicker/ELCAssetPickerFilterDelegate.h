@@ -8,5 +8,6 @@
 
 // respond YES/NO to filter out (not show the asset)
 -(BOOL)assetTablePicker:(ELCAssetTablePicker *)picker isAssetFilteredOut:(ELCAsset *)elcAsset;
+-(BOOL) assetCast:(ELCAsset *)asset;
 
 @end

@@ -92,7 +92,25 @@
         frame.origin.x = frame.origin.x + frame.size.width + 4;
     }
 }
+-(void)unSelectAll
+{
+    int i =0;
+    for (ELCAsset *asset in _rowAssets) {
+        asset.selected = FALSE;
+        int counts =  [_overlayViewArray count];
+        if(counts>i)
+        {
+            UIImageView *overlayView = [_overlayViewArray objectAtIndex:i];
+            if (overlayView) {
+                overlayView.hidden = TRUE;
+                }
+        }
+        i++;
 
+    }
+    
+    
+}
 - (void)layoutSubviews
 {    
     CGFloat totalWidth = self.rowAssets.count * 75 + (self.rowAssets.count - 1) * 4;

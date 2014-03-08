@@ -7,6 +7,7 @@
 //
 
 #import <Foundation/Foundation.h>
+#import "ChromecastDeviceController.h"
 
 @class ELCAsset;
 
@@ -14,5 +15,6 @@
 
 - (void)selectedAssets:(NSArray *)assets;
 - (BOOL)shouldSelectAsset:(ELCAsset *)asset previousCount:(NSUInteger)previousCount;
+- (BOOL) assetCast:(ELCAsset *)asset;
 
 @end

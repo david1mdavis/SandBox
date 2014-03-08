@@ -13,6 +13,7 @@
 @protocol ELCAssetDelegate <NSObject>
 
 @optional
+- (BOOL) assetCast:(ELCAsset *)asset;
 - (void)assetSelected:(ELCAsset *)asset;
 - (BOOL)shouldSelectAsset:(ELCAsset *)asset;
 @end

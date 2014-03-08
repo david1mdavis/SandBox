@@ -11,5 +11,6 @@
 @interface ELCAssetCell : UITableViewCell
 
 - (void)setAssets:(NSArray *)assets;
+-(void)unSelectAll;
 
 @end
