@@ -39,7 +39,8 @@
   
 
     self.navigationItem.leftBarButtonItem = barBackButton;
-    self.navigationItem.rightBarButtonItem = self.editButtonItem;;
+  //  self.navigationItem.rightBarButtonItem = self.editButtonItem;;
+    self.title =@"Long Touch to Move";
     
 
     [self.tableView registerClass:[UITableViewCell class] forCellReuseIdentifier:@"Cell"];
@@ -84,7 +85,23 @@
 {
     return _objects.count;
 }
+- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    
+    if ([[_objects objectAtIndex:indexPath.row] isKindOfClass:[NSString class]] &&
+        [[_objects objectAtIndex:indexPath.row] isEqualToString:@"DUMMY"]) {
+    }
+    else {
+        MPMediaItem *object= _objects[indexPath.row];
+        MPMediaItemArtwork *artwork = [object valueForProperty: MPMediaItemPropertyArtwork];
+        if(artwork)
+            return 80;
+    }
+    
 
+
+    return 30;
+}
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 
 
@@ -93,7 +110,12 @@
    // UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier forIndexPath:indexPath];
 
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"Cell" forIndexPath:indexPath];
-    cell.textLabel.text = [self.objects[indexPath.row] valueForProperty: MPMediaItemPropertyArtist];
+    NSString * artist =[self.objects[indexPath.row] valueForProperty: MPMediaItemPropertyArtist] ;
+    NSString * title  =[self.objects[indexPath.row] valueForProperty: MPMediaItemPropertyTitle] ;
+ 
+    UILabel *cellLabelArtist = [[UILabel alloc]init];
+    UILabel *cellLabelTitle = [[UILabel alloc]init];
+   // cell.textLabel.text =[NSString stringWithFormat:@"       %@\r\n %@", artist, title];
     
    // return cell;
     
@@ -110,10 +132,10 @@
     }
     else {
          MPMediaItem *object= _objects[indexPath.row];
-        cell.textLabel.text = [object valueForProperty: MPMediaItemPropertyArtist];
+        //  cell.textLabel.text =[NSString stringWithFormat:@"       %@\r\n %@", artist, title];
                
         
-        MPMediaItemArtwork *artwork = [object valueForProperty: MPMediaItemPropertyArtwork];
+    MPMediaItemArtwork *artwork = [object valueForProperty: MPMediaItemPropertyArtwork];
         
         // Obtain a UIImage object from the MPMediaItemArtwork object
         if (artwork) {
@@ -121,8 +143,32 @@
             UIImageView *imv = [[UIImageView alloc]initWithFrame:CGRectMake(3,2, 50, 50)];
             imv.image=artworkImage;
             [cell.contentView addSubview:imv];
-
+             cellLabelArtist.frame = CGRectMake(55, 0, 200, 20 );
+             cellLabelTitle.frame = CGRectMake(5, 55, 200, 20 );
         }
+        else{
+            cellLabelArtist.frame = CGRectMake(5, 0, 200, 20 );
+            cellLabelTitle.frame = CGRectMake(5, 25, 200, 20 );
+            
+        }
+        
+        
+            cellLabelArtist.numberOfLines = 0;
+
+            cellLabelArtist.text = artist;
+        
+            [cell.contentView addSubview:cellLabelArtist];
+        
+           
+            cellLabelTitle.numberOfLines = 0;
+            
+            cellLabelTitle.text = title;
+
+            [cell.contentView addSubview:cellLabelTitle];
+            
+            
+            
+        
 
 //        imv.image=[UIImage imageNamed:@"user.jpg"];
             }

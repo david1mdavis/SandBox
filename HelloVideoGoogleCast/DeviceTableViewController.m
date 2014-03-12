@@ -32,6 +32,10 @@ NSString *const CellIdForDeviceName = @"deviceName";
   }
   return self;
 }
+- (void)didReceiveMediaStateChange {
+    [self.tableView reloadData];
+}
+
 
 - (ChromecastDeviceController *)castDeviceController {
   AppDelegate *delegate = (AppDelegate *)[UIApplication sharedApplication].delegate;
@@ -172,6 +176,8 @@ NSString *const CellIdForDeviceName = @"deviceName";
           [self.castDeviceController.deviceScanner.devices objectAtIndex:indexPath.row];
       NSLog(@"Selecting device:%@", device.friendlyName);
       [self.castDeviceController connectToDevice:device];
+        sleep((1));
+        [self.tableView reloadData];
     }
   } else if (self.castDeviceController.isPlayingMedia == YES && indexPath.row == 0) {
     if ([self.castDeviceController.delegate
@@ -191,6 +197,7 @@ NSString *const CellIdForDeviceName = @"deviceName";
 
 - (IBAction)disconnectDevice:(id)sender {
   [self.castDeviceController disconnectFromDevice];
+    [self.tableView reloadData];
 
   // Dismiss the view.
   [self dismissViewControllerAnimated:YES completion:nil];

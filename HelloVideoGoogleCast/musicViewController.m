@@ -6,13 +6,13 @@
 //  Copyright (c) 2014 david davis. All rights reserved.
 //
 
-#import "SecondViewController.h"
+#import "MusicViewController.h"
 #import "DeviceViewController.h"
 #import "MusicNavViewController.h"
 #import "FileUtil.h"
 #import "NetworkUtil.h"
 
-@interface SecondViewController (){
+@interface MusicViewController (){
     __strong ChromecastDeviceController *_chromecastController;
     }
 
@@ -21,7 +21,7 @@
 @property BOOL listenToMusic;
 @end
 
-@implementation SecondViewController
+@implementation MusicViewController
 
 /*- (void) handle_NowPlayingItemChanged: (id) notification {
     
@@ -90,15 +90,19 @@
 
 -(void) viewDidAppear:(BOOL)animated
 {
+    
     if (!_chromecastController.deviceManager.isConnected)
     {
-        
+        sleep(2);
+        if (!_chromecastController.deviceManager.isConnected)
+        {
             DeviceViewController *vc = [self.storyboard instantiateViewControllerWithIdentifier:@"devies"];
             [self presentViewController:vc animated:YES completion:nil];
+        }
         
     
     }
-    if (_chromecastController.deviceManager.isConnected  && _listenToMusic)
+    if (_chromecastController.deviceManager.isConnectedToApp  && _listenToMusic)
         [self pickMusic];
     
 }
@@ -152,7 +156,7 @@
 	//MPMediaItem *currentItem = (MPMediaItem *)[mediaItemCollection.items objectAtIndex: 0];
     
 
-   //  [self dismissViewControllerAnimated:YES completion:nil];
+    [self dismissViewControllerAnimated:YES completion:nil];
    
 }
 
@@ -227,13 +231,13 @@
              UIImage * artworkImage = [artwork imageWithSize: CGSizeMake (800, 800)];
              [FileUtil saveImage:artworkImage withName:
               @"artThumb.jpg"];
-              NSString * url = [NSString stringWithFormat:@"%@%@%@",@"http://",[NetworkUtil getIPAddress:TRUE],@":8080/artThumb.jpg"];
+              NSString * url = [NSString stringWithFormat:@"%@%@%@",@"http://",[NetworkUtil getIPAddress:TRUE],@":7083/artThumb.jpg"];
              thumbURL =[NSURL URLWithString:url];
          }
 
          
          
-         NSString * url = [NSString stringWithFormat:@"%@%@%@",@"http://",[NetworkUtil getIPAddress:TRUE],@":8080/exported.mov"];
+         NSString * url = [NSString stringWithFormat:@"%@%@%@",@"http://",[NetworkUtil getIPAddress:TRUE],@":7083/exported.mov"];
 
        
          
@@ -243,7 +247,8 @@
      subtitle:[_currentItem valueForProperty: MPMediaItemPropertyTitle]
      mimeType:@"video/mp4"
      startTime:0
-     autoPlay:YES];
+     autoPlay:YES
+    customData:nil];
 
          
        //  [self casttexported_mov];

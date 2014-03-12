@@ -1,5 +1,5 @@
 //
-//  FirstViewController.h
+//  VideosViewController.h
 //  mediacast
 //
 //  Created by david davis on 2/28/14.
@@ -20,7 +20,7 @@
 #import <AVFoundation/AVFoundation.h>
 
 
-@interface FirstViewController : UIViewController<GCKDeviceManagerDelegate,
+@interface VideosViewController : UIViewController<GCKDeviceManagerDelegate,
                                                   GCKMediaControlChannelDelegate,
                                                   UIActionSheetDelegate,
 ELCImagePickerControllerDelegate>
@@ -54,8 +54,10 @@ ELCImagePickerControllerDelegate>
 @property (weak, nonatomic) IBOutlet UIImageView *movieThumb;
 @property (weak, nonatomic) IBOutlet UILabel *videoProcessLabel;
 @property NSString *strDateShot;
+@property dispatch_queue_t queue;
 
 /** The media object and when to start playing on Chromecast device. Set this before presenting the view. */
 - (void)setMediaToPlay:(Media*)newMedia withStartingTime:(NSTimeInterval)startTime;
-;
++(void) castVideo;
+
 @end

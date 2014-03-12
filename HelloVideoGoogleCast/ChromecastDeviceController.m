@@ -70,7 +70,7 @@ static NSString *const kReceiverAppID = @"9D100972";  //Replace with your app id
 }
 
 - (BOOL)isConnected {
-  return self.deviceManager.isConnected;
+  return self.deviceManager.isConnectedToApp;
 }
 
 - (BOOL)isPlayingMedia {
@@ -250,6 +250,7 @@ static NSString *const kReceiverAppID = @"9D100972";  //Replace with your app id
 - (void)deviceManager:(GCKDeviceManager *)deviceManager
     didReceiveStatusForApplication:(GCKApplicationMetadata *)applicationMetadata {
   self.applicationMetadata = applicationMetadata;
+     NSLog(@"didReceiveStatusForApplication");
 }
 
 - (void)deviceManager:(GCKDeviceManager *)deviceManager
@@ -270,6 +271,7 @@ static NSString *const kReceiverAppID = @"9D100972";  //Replace with your app id
 }
 
 - (void)deviceDidGoOffline:(GCKDevice *)device {
+    NSLog(@"deviceDidGoOffline");
   [self updateCastIconButtonStates];
 }
 
@@ -305,7 +307,8 @@ static NSString *const kReceiverAppID = @"9D100972";  //Replace with your app id
          subtitle:(NSString *)subtitle
          mimeType:(NSString *)mimeType
         startTime:(NSTimeInterval)startTime
-         autoPlay:(BOOL)autoPlay {
+         autoPlay:(BOOL)autoPlay
+       customData:(id) customData {
   if (!self.deviceManager || !self.deviceManager.isConnected) {
     return NO;
   }
@@ -329,7 +332,7 @@ static NSString *const kReceiverAppID = @"9D100972";  //Replace with your app id
                                          contentType:mimeType
                                             metadata:metadata
                                       streamDuration:0
-                                          customData:nil];
+                                          customData:customData];
   [self.mediaControlChannel loadMedia:mediaInformation autoplay:autoPlay playPosition:startTime];
 
   return YES;

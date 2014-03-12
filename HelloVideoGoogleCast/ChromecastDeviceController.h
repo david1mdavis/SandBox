@@ -130,7 +130,8 @@ typedef NS_ENUM(NSInteger, ChromecastControllerFeatures) {
          subtitle:(NSString*)subtitle
          mimeType:(NSString*)mimeType
         startTime:(NSTimeInterval)startTime
-         autoPlay:(BOOL)autoPlay;
+         autoPlay:(BOOL)autoPlay
+         customData:(id) customData;
 
 /** Returns true if connected to a Chromecast device. */
 - (BOOL)isConnected;

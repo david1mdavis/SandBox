@@ -18,13 +18,15 @@
 #import "ELCAlbumPickerController.h"
 #import "ELCAssetTablePicker.h"
 #import <AVFoundation/AVFoundation.h>
+#import <MediaPlayer/MediaPlayer.h>
 #import "Media.h"
 #import "MediaControls.h"
 
 @interface PhotosViewController : UIViewController<GCKDeviceManagerDelegate,
                                                    GCKMediaControlChannelDelegate,
                                                     UIActionSheetDelegate,
-                                                    ELCImagePickerControllerDelegate>
+                                                    ELCImagePickerControllerDelegate,
+                                                    MPMediaPickerControllerDelegate>
 {NSTimeInterval _mediaStartTime;
     BOOL _currentlyDraggingSlider;
     BOOL _readyToShowInterface;
@@ -32,6 +34,8 @@
     float _fLenInSeconds;
     
 }
+@property (weak, nonatomic) IBOutlet UIButton *slideShowMusicbutton;
+
 @property(strong, nonatomic) Media* mediaToPlay;
 @property(weak, nonatomic) NSTimer* updateStreamTimer;
 @property(weak, nonatomic) NSTimer* updateFilterTimer;
@@ -48,5 +52,5 @@
 
 
 @property(nonatomic, strong)  ELCImagePickerController *elcPicker;
-
++(void) castSlideShowWithMusic;
 @end

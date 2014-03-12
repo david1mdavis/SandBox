@@ -6,18 +6,18 @@
 //  Copyright (c) 2014 david davis. All rights reserved.
 //
 
-#import "FirstViewController.h"
+#import "VideosViewController.h"
 #import "DeviceViewController.h"
 #import "FileUtil.h"
 #import "NetworkUtil.h"
 #import "MediaControls.h"
-@interface FirstViewController ()
+@interface VideosViewController ()
 
 
 
 @end
 
-@implementation FirstViewController
+@implementation VideosViewController
 
 
 - (void)didConnectToDevice:(GCKDevice *)device {
@@ -29,10 +29,17 @@
     
 }
 - (IBAction)ChooseVideo:(id)sender {
+
     [self video];
 }
 
 -(void)video {
+    
+    if (!_chromecastController.deviceManager.isConnectedToApp)
+    {
+        DeviceViewController *vc = [self.storyboard instantiateViewControllerWithIdentifier:@"devies"];
+        [self presentViewController:vc animated:YES completion:nil];
+    }
     
     // _nst_Timer = [NSTimer scheduledTimerWithTimeInterval:3 target:self selector:@selector(showTime) userInfo:nil repeats:YES];
     
@@ -46,7 +53,20 @@
     
 }
 
-
+- (void)elcImagePickerControllerDidCancel:(ELCImagePickerController *)picker
+{
+    [self dismissViewControllerAnimated:YES completion:nil];
+}
+-(float)getFrameRateFromAVPlayer:(AVAssetTrack *) assessetTrack
+{
+    float fps = 0.0;
+    
+        {
+            fps = assessetTrack.nominalFrameRate;
+        }
+    
+    return fps;
+}
 - (void)elcImagePickerController:(ELCImagePickerController *)picker didFinishPickingMediaWithInfo:(NSArray *)info
 {
     [self dismissViewControllerAnimated:YES completion:nil];
@@ -118,22 +138,50 @@
                 float  videoAngleInDegree  = (atan2(txf.b, txf.a));
                 
                 
+                //11308151.000000
+                //17033096.000000
+                NSLog(@"estimatedDataRate= %f",track.estimatedDataRate);
+                //
+                if (!videoAngleInDegree  && track.estimatedDataRate<11008151  )
+                {
+                    NSFileManager *fileManager = [NSFileManager defaultManager];
+                    NSString *filePath = [NSTemporaryDirectory() stringByAppendingPathComponent:@"temp.m4v"];
+                    NSError *error;
+                    BOOL success = [fileManager removeItemAtPath:filePath error:&error];
+                      NSURL *exportURL = [NSURL fileURLWithPath:filePath] ;
+                    [self convertVideoToMediumQualityWithInputURL:mediaurl outputURL:exportURL ];
+                    _fLenInSeconds *= 12/_fLenInSeconds;
+                   // [self copyVRawideoToTemp:mediaurl];
+                    dispatch_async(dispatch_get_main_queue(), ^{
+                        // _fLenInSeconds *= 1.5;
+                        //  updateTimer = [NSTimer scheduledTimerWithTimeInterval:0.01428 target:self selector:@selector(GameUpdate) userInfo:nil repeats:YES];
+                        _updateFilterTimer = [NSTimer scheduledTimerWithTimeInterval:1 target:self selector:@selector(showTime:) userInfo:nil repeats:YES];
+                        self.filterProgress.hidden = false;
+                        [self.filterProgress setProgress:0.0 animated:TRUE];
+                    });
+                    
+                    return;
+                    
+                }
+
+                
+                
+               
                 
                 int filterIndex =[self.filterSegment selectedSegmentIndex];
                 switch (1) {
                     case 0:
+                        
                         [self rotateVideo:mediaurl radins:0.0 videoWidth:mediaSize.width videoHheightt:mediaSize.height ];
                         break;
                         
                     case 1:
-                        
-                        
-                        
+                        //_movieThumb.transform = CGAffineTransformMakeRotation(videoAngleInDegree - M_2_PI/2);
                         [self rotateVideo:mediaurl radins:videoAngleInDegree videoWidth:mediaSize.width videoHheightt:mediaSize.height ];
                         break;
                         
                     case 2:
-                     
+                       // _movieThumb.transform = CGAffineTransformMakeRotation(videoAngleInDegree - M_2_PI/2);
                         [self sketchVideo:mediaurl radins:videoAngleInDegree videoWidth:mediaSize.width videoHheightt:mediaSize.height ];
                         break;
                         
@@ -142,6 +190,7 @@
                         [self toonVideo:mediaurl radins:videoAngleInDegree videoWidth:mediaSize.width videoHheightt:mediaSize.height ];
                         break;
                 }
+               
                 
             }
         }
@@ -171,6 +220,26 @@
 	
     //	[_scrollView setPagingEnabled:YES];
     //	[_scrollView setContentSize:CGSizeMake(workingFrame.origin.x, workingFrame.size.height)];
+}
+
+- (void)convertVideoToMediumQualityWithInputURL:(NSURL*)inputURL outputURL:(NSURL*)outputURL
+{
+  /*  if([[NSFileManager defaultManager] fileExistsAtURL:outputURL])
+        [[NSFileManager defaultManager] removeItemAtURL:outputURL error:nil];*/
+    
+    AVURLAsset *asset = [AVURLAsset URLAssetWithURL:inputURL options:nil];
+    AVAssetExportSession *exportSession = [[AVAssetExportSession alloc] initWithAsset:asset presetName:AVAssetExportPresetMediumQuality];
+    exportSession.outputURL = outputURL;
+    exportSession.outputFileType = AVFileTypeQuickTimeMovie;
+    [exportSession exportAsynchronouslyWithCompletionHandler:^(void) {
+        if (exportSession.status == AVAssetExportSessionStatusCompleted) {
+ //           successHandler();
+            [self castVideo];
+        } else {
+           // NSError *error = [NSError errorWithDomain:domain code:code userInfo:userInfo];
+            //failureHandler(error);
+        }
+    }];
 }
 -(void)showTime:(NSTimer *)timer
 {
@@ -318,6 +387,112 @@
     }];
 }
 
+-(void)copyVRawideoToTemp:(NSURL*) mediaURL
+{
+    
+    
+
+    
+    ALAssetsLibrary *assetLibrary=[[ALAssetsLibrary alloc] init];
+    [assetLibrary assetForURL:mediaURL resultBlock:^(ALAsset *asset) {
+        NSString *filePath = [NSTemporaryDirectory() stringByAppendingPathComponent: @"temp.m4v"];
+       if ([[NSFileManager defaultManager] fileExistsAtPath:filePath])
+        {
+            [[NSFileManager defaultManager] removeItemAtPath:filePath error:nil];
+        }
+        
+        
+        
+        NSOutputStream * fileStream = [NSOutputStream outputStreamToFileAtPath:filePath append:NO];
+        [fileStream open];
+        NSInteger       dataLength;
+        const uint8_t * dataBytes;
+        NSInteger       bytesWritten;
+        NSInteger       bytesWrittenSoFar =0;
+        ALAssetRepresentation *rep = [asset defaultRepresentation];
+        
+        
+        
+        NSInteger blocksize = 1024*1024;
+        
+        //  Byte *buffer = (Byte*)malloc(rep.size);
+        Byte *buffer = (Byte*)malloc(blocksize);
+        NSInteger blockcount = rep.size/ blocksize;
+        NSInteger lastWrite = rep.size - blocksize* blockcount;
+        NSUInteger buffered =0;
+        NSData *data;
+        
+        
+        for (int i =0 ;i<=blockcount;i++ )
+        {
+            NSLog(@"copy video  %f",(float)i/(float)blockcount);
+            
+            // NSUInteger buffered = [rep getBytes:buffer fromOffset:0.0 length:rep.size error:nil];
+            if(i == blockcount)
+            {
+                buffered = [rep getBytes:buffer fromOffset:i*blocksize length:lastWrite error:nil];
+                data = [NSData dataWithBytesNoCopy:buffer length:buffered freeWhenDone:YES];
+            }
+            else
+            {
+                buffered = [rep getBytes:buffer fromOffset:i*blocksize length:blocksize error:nil];
+              //  data = [NSData dataWithBytesNoCopy:buffer length:buffered freeWhenDone:YES];
+                
+            }
+            
+            
+            
+            
+          //  dataLength = [data length];
+           // dataBytes  = [data bytes];
+            
+            bytesWrittenSoFar = 0;
+            do {
+                
+              //  bytesWritten = [fileStream write:&dataBytes[bytesWrittenSoFar] maxLength:dataLength - bytesWrittenSoFar];
+                bytesWritten = [fileStream write:buffer maxLength:buffered - bytesWrittenSoFar];
+//                assert(bytesWritten != 0);
+                if (bytesWritten <= 0) {
+                    NSLog(@"COPY VIDEO ERRO");
+                    break;
+                    
+                } else {
+                    bytesWrittenSoFar += bytesWritten;
+                }
+            } while (bytesWrittenSoFar != buffered);
+            
+            
+        }
+        
+        data = nil;
+        buffered = nil;
+        buffer=nil;
+        rep = nil;
+        
+        [fileStream close];
+        
+        
+     
+        
+        
+        
+       dispatch_async(dispatch_get_main_queue(), ^{
+                        [self castVideo];
+        });
+        
+        
+        
+        
+        
+        
+        
+        
+    } failureBlock:^(NSError *err) {
+        NSLog(@"Error: %@",[err localizedDescription]);
+    }];
+    
+}
+
 
 
 
@@ -326,38 +501,38 @@
          videoWidth:(int)width
       videoHheightt:(int)Height{
     
-  
-    
-    NSString *filePath = [NSTemporaryDirectory() stringByAppendingPathComponent:@"test.mp4"];
-    _movieFile = [[GPUImageMovie alloc] initWithURL:sampleURL];
-    _movieFile.runBenchmark = YES;
-    _movieFile.playAtActualSpeed = YES;
-    GPUImageTransformFilter *filter ;
-    
-    if (!rad)
-    {
-        [FileUtil copyVideoToTemp:sampleURL];
-        [self castVideo];
-        
-        return;
-    }
-    
-    
     
     dispatch_async(dispatch_get_main_queue(), ^{
-       // _fLenInSeconds *= 1.5;
+        // _fLenInSeconds *= 1.5;
         //  updateTimer = [NSTimer scheduledTimerWithTimeInterval:0.01428 target:self selector:@selector(GameUpdate) userInfo:nil repeats:YES];
         _updateFilterTimer = [NSTimer scheduledTimerWithTimeInterval:1 target:self selector:@selector(showTime:) userInfo:nil repeats:YES];
         self.filterProgress.hidden = false;
         [self.filterProgress setProgress:0.0 animated:TRUE];
     });
+
+    
+    
+    
+    NSString *filePath = [NSTemporaryDirectory() stringByAppendingPathComponent:@"test.mp4"];
+    _movieFile = [[GPUImageMovie alloc] initWithURL:sampleURL];
+    _movieFile.runBenchmark = NO;
+    _movieFile.playAtActualSpeed = YES;
+    GPUImageTransformFilter *filter ;
+    
+    
+    
     
     filter = [[GPUImageTransformFilter alloc] init];
     
+    if(rad)
+    {
+        [filter setAffineTransform:CGAffineTransformMakeRotation(rad)];
     
-    [filter setAffineTransform:CGAffineTransformMakeRotation(rad)];
+       [_movieFile addTarget:filter];
+    }
+        
+   
     
-    [_movieFile addTarget:filter];
 
     filePath = [NSTemporaryDirectory() stringByAppendingPathComponent:@"temp.m4v"];
     
@@ -370,11 +545,19 @@
     else
         _movieWriter = [[GPUImageMovieWriter alloc] initWithMovieURL:movieURL size:CGSizeMake( width,Height)];
     
-    [filter addTarget:_movieWriter];
+   if(rad)
+        [filter addTarget:_movieWriter];
+    else
+        [_movieFile addTarget:_movieWriter];
+        
+
+   
     
+   
     _movieWriter.shouldPassthroughAudio = YES;
     _movieFile.audioEncodingTarget = _movieWriter;
     [_movieFile enableSynchronizedEncodingUsingMovieWriter:_movieWriter];
+   
     [_movieWriter startRecording];
     [_movieFile startProcessing];
     
@@ -395,14 +578,16 @@
     NSLog(@"Cast Video");
     GCKMediaMetadata *metadata = [[GCKMediaMetadata alloc] init];
     
-    NSString * url = [NSString stringWithFormat:@"%@%@%@",@"http://",[NetworkUtil getIPAddress:TRUE],@":8080/temp.m4v"];
-     NSString * thumbURL = [NSString stringWithFormat:@"%@%@%@",@"http://",[NetworkUtil getIPAddress:TRUE],@":8080/thumbNail.jpg"];
+    NSString * url = [NSString stringWithFormat:@"%@%@%@",@"http://",[NetworkUtil getIPAddress:TRUE],@":7083/temp.m4v"];
+     NSString * thumbURL = [NSString stringWithFormat:@"%@%@%@",@"http://",[NetworkUtil getIPAddress:TRUE],@":7083/thumbNail.jpg"];
     
     
     NSLog(@"Started HTTP Server on url %@", url);
     
-    //thumbNail.jpg
     
+    
+    NSString *type = @"Video";
+    // id object = type;
     
     [_chromecastController loadMedia:[NSURL URLWithString :url ]
                         thumbnailURL:[NSURL URLWithString :thumbURL ]
@@ -410,52 +595,33 @@
                             subtitle: @"IPad/iPhone/iTouch"
                             mimeType:@"video/mp4"
                            startTime:0
-                            autoPlay:YES];
-
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    /*
-    
-    GCKMediaInformation *mediaInformation =
-    [[GCKMediaInformation alloc] initWithContentID:
-     url
-                                        streamType:GCKMediaStreamTypeNone
-                                       contentType:@"video/mp4"
-                                          metadata:metadata
-                                    streamDuration:0
-                                        customData:nil];
+                            autoPlay:YES
+                          customData:type];
    
-   
-    
-    //cast video
-    [_chromecastController.mediaControlChannel loadMedia:mediaInformation autoplay:TRUE playPosition:0];
-   
-      */
     
     NSLog(@"Medialurl = %@",url);
-    [_updateFilterTimer invalidate];
-    _updateFilterTimer = nil;
     
-    if (self.updateStreamTimer) {
-        [self.updateStreamTimer invalidate];
-        self.updateStreamTimer = nil;
-    }
-
     
     dispatch_async(dispatch_get_main_queue(), ^{
+        [_updateFilterTimer invalidate];
+        _updateFilterTimer = nil;
+        
+        if (self.updateStreamTimer) {
+            [self.updateStreamTimer invalidate];
+            self.updateStreamTimer = nil;
+        }
+        
+
       
         _playPauseButton.hidden = FALSE;
         _videoProcessLabel.hidden = TRUE;
         _slider.hidden = FALSE;
-         NSTimer* stimer = [NSTimer scheduledTimerWithTimeInterval:1 target:self selector:@selector(updateInterfaceFromCast:) userInfo:nil repeats:YES];
+        
+        _currTime.hidden = FALSE;
+        _totalTime.hidden = FALSE;
+        
+
+         _updateStreamTimer = [NSTimer scheduledTimerWithTimeInterval:1 target:self selector:@selector(updateInterfaceFromCast:) userInfo:nil repeats:YES];
       //  TRACE(@"Start Up updates");
     });
     
@@ -467,27 +633,15 @@
 
 }
 
--(void)castVideo1
-{
-    NSString * url = @"http://192.168.1.5:8080/temp.mv4v";
-    NSLog(url);
 
-    
-    [_chromecastController loadMedia:[NSURL URLWithString :url ]
-                        thumbnailURL:nil
-                               title:nil
-                            subtitle:nil
-                            mimeType:@"video/mp4"
-                           startTime:0
-                            autoPlay:YES];}
 
 -(void) viewDidAppear:(BOOL)animated
 {
-    return;
+  
     
     if (!_chromecastController.deviceManager.isConnected)
     {
-        sleep(.1);
+        sleep(1);
         if (!_chromecastController.deviceManager.isConnected)
         {
             DeviceViewController *vc = [self.storyboard instantiateViewControllerWithIdentifier:@"devies"];
@@ -563,7 +717,23 @@
     
     if (!_readyToShowInterface)
         return;
+    NSString *type  = _chromecastController.mediaInformation.customData;
+    NSLog(type);
+    if (type == nil || ![type isEqualToString:@"Video"]){
+        _slider.hidden = FALSE;
+        
+        _currTime.hidden = FALSE;
+        _totalTime.hidden = FALSE;
+         [_playPauseButton setTitle:@"PLay"forState:UIControlStateNormal];
+        return;
+    }
+
+    _videoProcessLabel.hidden = TRUE;
+    _slider.hidden = FALSE;
     
+    _currTime.hidden = FALSE;
+    _totalTime.hidden = FALSE;
+    _playPauseButton.hidden = FALSE;
     if (_chromecastController.playerState != GCKMediaPlayerStateBuffering) {
 //dmd        [self.castActivityIndicator stopAnimating];
     } else {
@@ -571,20 +741,24 @@
     }
     
     if (_chromecastController.streamDuration > 0 && !_currentlyDraggingSlider) {
+        self.currTime.hidden = FALSE;
+        self.totalTime.hidden = FALSE;
         self.currTime.text = @"cur";
         self.totalTime.text = @"total";
         self.currTime.text = [self getFormattedTime:_chromecastController.streamPosition];
-        self.totalTime.text = [self getFormattedTime:_chromecastController.streamDuration];
-        [self.slider
-         setValue:(_chromecastController.streamPosition / _chromecastController.streamDuration)
+        self.totalTime.text = [self getFormattedTime:(_chromecastController.streamDuration - _chromecastController.streamPosition)];
+        [self.slider setValue:(_chromecastController.streamPosition / _chromecastController.streamDuration)
          animated:YES];
     }
     if (_chromecastController.playerState == GCKMediaPlayerStatePaused ||
         _chromecastController.playerState == GCKMediaPlayerStateIdle) {
+         [_playPauseButton setTitle:@"PLay"forState:UIControlStateNormal];
+        
 //dmd        self.toolbarItems = self.playToolbar;
     } else if (_chromecastController.playerState == GCKMediaPlayerStatePlaying ||
                _chromecastController.playerState == GCKMediaPlayerStateBuffering) {
     //dmd    self.toolbarItems = self.pauseToolbar;
+         [_playPauseButton setTitle:@"Pause"forState:UIControlStateNormal];
     }
 }
 
@@ -608,6 +782,13 @@
 
 #pragma mark - On - screen UI elements
 - (IBAction)pauseButtonClicked:(id)sender {
+    
+    NSString *type  = _chromecastController.mediaInformation.customData;
+    NSLog(type);
+    if (type == nil && ![type isEqualToString:@"Video"]){
+        [self castVideo];
+    }
+    
     if(_chromecastController.playerState == GCKMediaPlayerStatePaused)
     {
         [_chromecastController pauseCastMedia:NO];
@@ -698,7 +879,7 @@
 #pragma mark - implementation.
 
 - (void)initControls {
-    UIBarButtonItem* playButton =
+  /*  UIBarButtonItem* playButton =
     [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemPlay
                                                   target:self
                                                   action:@selector(playButtonClicked:)];
@@ -720,6 +901,7 @@
     [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemFlexibleSpace
                                                   target:nil
                                                   action:nil];
+   */
     
     //self.slider = [[UISlider alloc] init];
     [self.slider addTarget:self

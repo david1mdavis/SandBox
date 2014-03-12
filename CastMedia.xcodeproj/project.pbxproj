@@ -12,9 +12,9 @@
 		872D441E18C1A9A20097B1F0 /* DeviceTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 872D441018C1A9A20097B1F0 /* DeviceTableViewController.m */; };
 		872D442018C1A9A20097B1F0 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 872D441418C1A9A20097B1F0 /* AppDelegate.m */; };
 		872D442118C1A9A20097B1F0 /* Main_iPhone.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 872D441518C1A9A20097B1F0 /* Main_iPhone.storyboard */; };
-		872D442218C1A9A20097B1F0 /* Main_iPad.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 872D441618C1A9A20097B1F0 /* Main_iPad.storyboard */; };
-		872D442318C1A9A20097B1F0 /* FirstViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 872D441818C1A9A20097B1F0 /* FirstViewController.m */; };
-		872D442418C1A9A20097B1F0 /* secondViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 872D441A18C1A9A20097B1F0 /* secondViewController.m */; };
+		872D442218C1A9A20097B1F0 /* Main_iPad.storyboard3 in Resources */ = {isa = PBXBuildFile; fileRef = 872D441618C1A9A20097B1F0 /* Main_iPad.storyboard3 */; };
+		872D442318C1A9A20097B1F0 /* VideotViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 872D441818C1A9A20097B1F0 /* VideotViewController.m */; };
+		872D442418C1A9A20097B1F0 /* musicViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 872D441A18C1A9A20097B1F0 /* musicViewController.m */; };
 		872D442818C1B1310097B1F0 /* ChromecastDeviceController.m in Sources */ = {isa = PBXBuildFile; fileRef = 872D442718C1B1310097B1F0 /* ChromecastDeviceController.m */; };
 		872D447418C1CADA0097B1F0 /* icon_cast_off.png in Resources */ = {isa = PBXBuildFile; fileRef = 872D442918C1CADA0097B1F0 /* icon_cast_off.png */; };
 		872D447518C1CADA0097B1F0 /* icon_cast_on.png in Resources */ = {isa = PBXBuildFile; fileRef = 872D442A18C1CADA0097B1F0 /* icon_cast_on.png */; };
@@ -165,7 +165,9 @@
 		879EDE1D18B70A28006A1735 /* video.mp4 in Resources */ = {isa = PBXBuildFile; fileRef = 879EDE1B18B70A28006A1735 /* video.mp4 */; };
 		879EDE3218B71587006A1735 /* Web in Resources */ = {isa = PBXBuildFile; fileRef = 879EDE3118B71587006A1735 /* Web */; };
 		879EDE3418B74DA9006A1735 /* AVFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 879EDE3318B74DA9006A1735 /* AVFoundation.framework */; };
-		87F1D42B18BA11B000EB1C42 /* GPUImage.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 87F1D42A18BA11B000EB1C42 /* GPUImage.framework */; };
+		87C7D5C018CD01F500FE6BB9 /* MemoryUtil.m in Sources */ = {isa = PBXBuildFile; fileRef = 87C7D5BF18CD01F500FE6BB9 /* MemoryUtil.m */; };
+		87C7D5C218CD2AE700FE6BB9 /* stack_of_photos-50.png in Resources */ = {isa = PBXBuildFile; fileRef = 87C7D5C118CD2AE600FE6BB9 /* stack_of_photos-50.png */; };
+		87C7D5C418CEBBBF00FE6BB9 /* libGPUImage.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 87C7D5C318CEBBBF00FE6BB9 /* libGPUImage.a */; };
 		87F1D42F18BA12C400EB1C42 /* GoogleCast.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 87F1D42E18BA12C400EB1C42 /* GoogleCast.framework */; };
 		CC34F3D41885E326007E3FFC /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CC34F3D31885E326007E3FFC /* Foundation.framework */; };
 		CC34F3D61885E326007E3FFC /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CC34F3D51885E326007E3FFC /* CoreGraphics.framework */; };
@@ -206,11 +208,11 @@
 		872D441118C1A9A20097B1F0 /* AppDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
 		872D441418C1A9A20097B1F0 /* AppDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
 		872D441518C1A9A20097B1F0 /* Main_iPhone.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Main_iPhone.storyboard; sourceTree = "<group>"; };
-		872D441618C1A9A20097B1F0 /* Main_iPad.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Main_iPad.storyboard; sourceTree = "<group>"; };
-		872D441718C1A9A20097B1F0 /* FirstViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = FirstViewController.h; path = HelloVideoGoogleCast/FirstViewController.h; sourceTree = "<group>"; };
-		872D441818C1A9A20097B1F0 /* FirstViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = FirstViewController.m; path = HelloVideoGoogleCast/FirstViewController.m; sourceTree = "<group>"; };
-		872D441918C1A9A20097B1F0 /* SecondViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SecondViewController.h; path = HelloVideoGoogleCast/SecondViewController.h; sourceTree = "<group>"; };
-		872D441A18C1A9A20097B1F0 /* secondViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = secondViewController.m; path = HelloVideoGoogleCast/secondViewController.m; sourceTree = "<group>"; };
+		872D441618C1A9A20097B1F0 /* Main_iPad.storyboard3 */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = Main_iPad.storyboard3; sourceTree = "<group>"; };
+		872D441718C1A9A20097B1F0 /* VideosViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = VideosViewController.h; path = HelloVideoGoogleCast/VideosViewController.h; sourceTree = "<group>"; };
+		872D441818C1A9A20097B1F0 /* VideotViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = VideotViewController.m; path = HelloVideoGoogleCast/VideotViewController.m; sourceTree = "<group>"; };
+		872D441918C1A9A20097B1F0 /* MusicViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MusicViewController.h; path = HelloVideoGoogleCast/MusicViewController.h; sourceTree = "<group>"; };
+		872D441A18C1A9A20097B1F0 /* musicViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = musicViewController.m; path = HelloVideoGoogleCast/musicViewController.m; sourceTree = "<group>"; };
 		872D442618C1B1310097B1F0 /* ChromecastDeviceController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ChromecastDeviceController.h; path = HelloVideoGoogleCast/ChromecastDeviceController.h; sourceTree = "<group>"; };
 		872D442718C1B1310097B1F0 /* ChromecastDeviceController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ChromecastDeviceController.m; path = HelloVideoGoogleCast/ChromecastDeviceController.m; sourceTree = "<group>"; };
 		872D442918C1CADA0097B1F0 /* icon_cast_off.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = icon_cast_off.png; sourceTree = "<group>"; };
@@ -419,6 +421,10 @@
 		879EDE1B18B70A28006A1735 /* video.mp4 */ = {isa = PBXFileReference; lastKnownFileType = file; path = video.mp4; sourceTree = "<group>"; };
 		879EDE3118B71587006A1735 /* Web */ = {isa = PBXFileReference; lastKnownFileType = folder; name = Web; path = HelloVideoGoogleCast/Web; sourceTree = "<group>"; };
 		879EDE3318B74DA9006A1735 /* AVFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AVFoundation.framework; path = System/Library/Frameworks/AVFoundation.framework; sourceTree = SDKROOT; };
+		87C7D5BE18CD01F500FE6BB9 /* MemoryUtil.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MemoryUtil.h; sourceTree = "<group>"; };
+		87C7D5BF18CD01F500FE6BB9 /* MemoryUtil.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MemoryUtil.m; sourceTree = "<group>"; };
+		87C7D5C118CD2AE600FE6BB9 /* stack_of_photos-50.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "stack_of_photos-50.png"; sourceTree = "<group>"; };
+		87C7D5C318CEBBBF00FE6BB9 /* libGPUImage.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libGPUImage.a; path = "../../../Downloads/GPUImage-master/build/Debug-iphoneos/libGPUImage.a"; sourceTree = "<group>"; };
 		87F1D42A18BA11B000EB1C42 /* GPUImage.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = GPUImage.framework; sourceTree = "<group>"; };
 		87F1D42E18BA12C400EB1C42 /* GoogleCast.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = GoogleCast.framework; sourceTree = "<group>"; };
 		CC34F3D01885E326007E3FFC /* CastMedia.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = CastMedia.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -448,6 +454,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				87C7D5C418CEBBBF00FE6BB9 /* libGPUImage.a in Frameworks */,
 				876967B018BF335F00798671 /* MediaPlayer.framework in Frameworks */,
 				876967AE18BF334B00798671 /* AudioToolbox.framework in Frameworks */,
 				87F1D42F18BA12C400EB1C42 /* GoogleCast.framework in Frameworks */,
@@ -457,7 +464,6 @@
 				879EDE3418B74DA9006A1735 /* AVFoundation.framework in Frameworks */,
 				879EDDB918B6D249006A1735 /* Security.framework in Frameworks */,
 				879EDDB718B6D241006A1735 /* CFNetwork.framework in Frameworks */,
-				87F1D42B18BA11B000EB1C42 /* GPUImage.framework in Frameworks */,
 				879EDE1818B6DBBA006A1735 /* GCDAsyncSocket.m in Frameworks */,
 				CC34F3D61885E326007E3FFC /* CoreGraphics.framework in Frameworks */,
 				CC34F3D81885E326007E3FFC /* UIKit.framework in Frameworks */,
@@ -492,6 +498,7 @@
 				872D443118C1CADA0097B1F0 /* icon_cast_on1@2x.png */,
 				872D443218C1CADA0097B1F0 /* icon_cast_on2@2x.png */,
 				872D443318C1CADA0097B1F0 /* icon_settings_outline_black.png */,
+				87C7D5C118CD2AE600FE6BB9 /* stack_of_photos-50.png */,
 				872D443418C1CADA0097B1F0 /* icon_settings_outline_black@2x.png */,
 				872D443518C1CADA0097B1F0 /* logo_castvideos.png */,
 				872D443618C1CADA0097B1F0 /* logo_castvideos@2x.png */,
@@ -573,6 +580,8 @@
 				872D44DD18C5355A0097B1F0 /* VideoUtil.m */,
 				875E04D018CBCCFD00C58306 /* MediaControls.h */,
 				875E04D118CBCCFD00C58306 /* MediaControls.m */,
+				87C7D5BE18CD01F500FE6BB9 /* MemoryUtil.h */,
+				87C7D5BF18CD01F500FE6BB9 /* MemoryUtil.m */,
 			);
 			name = Utils;
 			sourceTree = "<group>";
@@ -606,8 +615,8 @@
 		872D44E118C53E100097B1F0 /* Videos */ = {
 			isa = PBXGroup;
 			children = (
-				872D441718C1A9A20097B1F0 /* FirstViewController.h */,
-				872D441818C1A9A20097B1F0 /* FirstViewController.m */,
+				872D441718C1A9A20097B1F0 /* VideosViewController.h */,
+				872D441818C1A9A20097B1F0 /* VideotViewController.m */,
 			);
 			name = Videos;
 			sourceTree = "<group>";
@@ -660,8 +669,8 @@
 			children = (
 				872D44CF18C3E9630097B1F0 /* BVReorderTableView.h */,
 				872D44D018C3E9630097B1F0 /* BVReorderTableView.m */,
-				872D441918C1A9A20097B1F0 /* SecondViewController.h */,
-				872D441A18C1A9A20097B1F0 /* secondViewController.m */,
+				872D441918C1A9A20097B1F0 /* MusicViewController.h */,
+				872D441A18C1A9A20097B1F0 /* musicViewController.m */,
 				872D44D618C3F3F90097B1F0 /* MusicNavViewController.h */,
 				872D44D718C3F3F90097B1F0 /* MusicNavViewController.m */,
 			);
@@ -885,6 +894,7 @@
 		CC34F3D21885E326007E3FFC /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				87C7D5C318CEBBBF00FE6BB9 /* libGPUImage.a */,
 				876967AF18BF335E00798671 /* MediaPlayer.framework */,
 				876967AD18BF334B00798671 /* AudioToolbox.framework */,
 				87F1D42E18BA12C400EB1C42 /* GoogleCast.framework */,
@@ -909,7 +919,7 @@
 				872D441118C1A9A20097B1F0 /* AppDelegate.h */,
 				872D441418C1A9A20097B1F0 /* AppDelegate.m */,
 				CC34F3EE1885E326007E3FFC /* Images.xcassets */,
-				872D441618C1A9A20097B1F0 /* Main_iPad.storyboard */,
+				872D441618C1A9A20097B1F0 /* Main_iPad.storyboard3 */,
 				CC34F3E81885E326007E3FFC /* Main_iPad.storyboard2 */,
 				872D441518C1A9A20097B1F0 /* Main_iPhone.storyboard */,
 				CC34F3E51885E326007E3FFC /* Main_iPhone.storyboard1 */,
@@ -1033,7 +1043,7 @@
 				8793653818B9945500AD0B3C /* ELCAlbumPickerController.xib in Resources */,
 				872D448218C1CADA0097B1F0 /* video_thumb_mini.png in Resources */,
 				872D44B018C1CADA0097B1F0 /* icon-ios_democast_120.png in Resources */,
-				872D442218C1A9A20097B1F0 /* Main_iPad.storyboard in Resources */,
+				872D442218C1A9A20097B1F0 /* Main_iPad.storyboard3 in Resources */,
 				879EDE1C18B70A28006A1735 /* index.html in Resources */,
 				879EDE1D18B70A28006A1735 /* video.mp4 in Resources */,
 				872D449718C1CADA0097B1F0 /* drawer_shadow.png in Resources */,
@@ -1051,6 +1061,7 @@
 				872D44A418C1CADA0097B1F0 /* list_outline@2x.png in Resources */,
 				872D449518C1CADA0097B1F0 /* drawer_shadow-with-edge.png in Resources */,
 				872D448318C1CADA0097B1F0 /* video_thumb_mini@2x.png in Resources */,
+				87C7D5C218CD2AE700FE6BB9 /* stack_of_photos-50.png in Resources */,
 				872D449118C1CADA0097B1F0 /* cast_solid_white.png in Resources */,
 				872D44AE18C1CADA0097B1F0 /* icon-ios_democast_76.png in Resources */,
 				872D448C18C1CADA0097B1F0 /* cast_outline@2x.png in Resources */,
@@ -1153,7 +1164,7 @@
 				8793653718B9945500AD0B3C /* ELCImagePickerController.m in Sources */,
 				8755784318C7CABE00B20C6D /* NYXProgressiveImageView.m in Sources */,
 				879EDDE918B6DAB1006A1735 /* HTTPConnection.m in Sources */,
-				872D442418C1A9A20097B1F0 /* secondViewController.m in Sources */,
+				872D442418C1A9A20097B1F0 /* musicViewController.m in Sources */,
 				8793653318B9945500AD0B3C /* ELCAlbumPickerController.m in Sources */,
 				8755783D18C7CAA100B20C6D /* UIImage+Rotating.m in Sources */,
 				879EDDEA18B6DAB1006A1735 /* HTTPMessage.m in Sources */,
@@ -1185,6 +1196,7 @@
 				879EDE0A18B6DB7D006A1735 /* DDAbstractDatabaseLogger.m in Sources */,
 				879EDDF018B6DAB1006A1735 /* HTTPDataResponse.m in Sources */,
 				872D442818C1B1310097B1F0 /* ChromecastDeviceController.m in Sources */,
+				87C7D5C018CD01F500FE6BB9 /* MemoryUtil.m in Sources */,
 				879EDDF118B6DAB1006A1735 /* HTTPDynamicFileResponse.m in Sources */,
 				872D44DB18C45BFE0097B1F0 /* PhotosViewController.m in Sources */,
 				879EDE0B18B6DB7D006A1735 /* DDASLLogger.m in Sources */,
@@ -1192,7 +1204,7 @@
 				879EDDF318B6DAB1006A1735 /* HTTPFileResponse.m in Sources */,
 				875E04D218CBCCFD00C58306 /* MediaControls.m in Sources */,
 				872D441C18C1A9A20097B1F0 /* SimpleImageFetcher.m in Sources */,
-				872D442318C1A9A20097B1F0 /* FirstViewController.m in Sources */,
+				872D442318C1A9A20097B1F0 /* VideotViewController.m in Sources */,
 				879EDDF418B6DAB1006A1735 /* HTTPRedirectResponse.m in Sources */,
 				8755783718C7CAA100B20C6D /* UIImage+Blurring.m in Sources */,
 				879EDE1018B6DB7D006A1735 /* DispatchQueueLogFormatter.m in Sources */,
@@ -1359,6 +1371,10 @@
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "HelloVideoGoogleCast/CastMedia-Prefix.pch";
 				INFOPLIST_FILE = "HelloVideoGoogleCast/CastMedia-Info.plist";
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"/Users/daviddavis/Downloads/GPUImage-master/build/Debug-iphoneos",
+				);
 				OTHER_LDFLAGS = "-ObjC";
 				PRODUCT_NAME = CastMedia;
 				WRAPPER_EXTENSION = app;
@@ -1383,6 +1399,10 @@
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "HelloVideoGoogleCast/CastMedia-Prefix.pch";
 				INFOPLIST_FILE = "HelloVideoGoogleCast/CastMedia-Info.plist";
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"/Users/daviddavis/Downloads/GPUImage-master/build/Debug-iphoneos",
+				);
 				OTHER_LDFLAGS = "-ObjC";
 				PRODUCT_NAME = CastMedia;
 				WRAPPER_EXTENSION = app;

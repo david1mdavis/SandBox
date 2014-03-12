@@ -6,6 +6,7 @@
 #import "VideoUtil.h"
 #import "FileUtil.h"
 #import "UIImage+Resizing.h"
+#import "MemoryUtil.h"
 
 @implementation VideoUtil
 
@@ -16,10 +17,7 @@
     
     
     NSString *filename = [NSTemporaryDirectory() stringByAppendingPathComponent:[array objectAtIndex:0]];
-   
-//    maxPhotosize = CGSizeMake(MIN(2000,maxPhotosize.width), MIN(2000,maxPhotosize.height));
-    
-        UIImage *first1 = [UIImage imageWithContentsOfFile:filename];
+    UIImage *first1 = [UIImage imageWithContentsOfFile:filename];
     maxPhotosize.width = 640*2;
     maxPhotosize.height =480*2;
     
@@ -29,11 +27,8 @@
 
     //UIImage *first =[first1 scaleToSize:maxPhotosize usingMode:NYXResizeModeAspectFit];
     backImageTemp=  [backImageTemp drawImage:backImageTemp withsize:maxPhotosize];
- 
-    
-  //  CGSize frameSize = image.size;
-    
     NSError *error = nil;
+    
     AVAssetWriter *videoWriter = [[AVAssetWriter alloc] initWithURL:
                                   [NSURL fileURLWithPath:[NSTemporaryDirectory()stringByAppendingPathComponent:path]] fileType:AVFileTypeQuickTimeMovie
                                                               error:&error];
@@ -73,9 +68,9 @@
     
     
     CVPixelBufferRef buffer = NULL;
-//dmd    buffer = [VideoUtil pixelBufferFromCGImage:[first CGImage]];
+
      buffer = [self newPixelBufferFromCGImage2:[backImageTemp CGImage]andFrameSize:backImage.size];
-   // backImageTemp = nil;
+  
     
     BOOL result = [adaptor appendPixelBuffer:buffer withPresentationTime:kCMTimeZero];
     
@@ -108,25 +103,20 @@
             CMTime lastTime=CMTimeMake(i, fps);
             CMTime presentTime=CMTimeAdd(lastTime, frameTime);
             
-            
+            [MemoryUtil print_free_memory];
             
           NSString *filePath = [NSTemporaryDirectory() stringByAppendingPathComponent:filename];
             
             UIImage *imgFrame = [UIImage imageWithContentsOfFile:filePath] ;
-           // UIImage *imgFrame =[imgFrame1 scaleToSize:maxPhotosize usingMode:NYXResizeModeAspectFit];
+           
             
             
-             backImageTemp = [backImage copy];
+            backImageTemp = [backImage copy];
             
-           // imgFrame =[imgFrame scaleToSize:maxPhotosize usingMode:NYXResizeModeAspectFit];
+           
             
             backImageTemp=  [backImageTemp drawImage:imgFrame withsize:maxPhotosize];
             imgFrame = nil;
-        
-
-            
-            
-    
             
             buffer = [self newPixelBufferFromCGImage2:[backImageTemp CGImage]andFrameSize:backImageTemp.size];
            
@@ -167,58 +157,7 @@
     writerInput=nil;
 }
 
-/*- (void) writeImagesAsMovie:(NSString*)path
-{
-    NSError *error  = nil;
-    UIImage *first = [arrImages objectAtIndex:0];
-    CGSize frameSize = first.size;
-    AVAssetWriter *videoWriter = [[AVAssetWriter alloc] initWithURL:
-                                  [NSURL fileURLWithPath:path] fileType:AVFileTypeQuickTimeMovie
-                                                              error:&error];
-    NSParameterAssert(videoWriter);
-    
-    NSDictionary *videoSettings = [NSDictionary dictionaryWithObjectsAndKeys:
-                                   AVVideoCodecH264, AVVideoCodecKey,
-                                   [NSNumber numberWithInt:640], AVVideoWidthKey,
-                                   [NSNumber numberWithInt:480], AVVideoHeightKey,
-                                   nil];
-    AVAssetWriterInput* writerInput = [AVAssetWriterInput
-                                        assetWriterInputWithMediaType:AVMediaTypeVideo
-                                        outputSettings:videoSettings] ;
-    
-    AVAssetWriterInputPixelBufferAdaptor *adaptor = [AVAssetWriterInputPixelBufferAdaptor
-                                                     assetWriterInputPixelBufferAdaptorWithAssetWriterInput:writerInput
-                                                     sourcePixelBufferAttributes:nil];
-    
-    NSParameterAssert(writerInput);
-    NSParameterAssert([videoWriter canAddInput:writerInput]);
-    [videoWriter addInput:writerInput];
-    
-    [videoWriter startWriting];
-    [videoWriter startSessionAtSourceTime:kCMTimeZero];
-    
-    int frameCount = 0;
-    CVPixelBufferRef buffer = NULL;
-    for(UIImage *img in arrImages)
-    {
-        buffer = [self newPixelBufferFromCGImage:[img CGImage] andFrameSize:frameSize];
-        
-        if (adaptor.assetWriterInput.readyForMoreMediaData)
-        {
-            CMTime frameTime = CMTimeMake(frameCount,(int32_t) kRecordingFPS);
-            [adaptor appendPixelBuffer:buffer withPresentationTime:frameTime];
-            
-            if(buffer)
-                CVBufferRelease(buffer);
-        }
-        frameCount++;
-    }
-    
-    [writerInput markAsFinished];
-    [videoWriter finishWriting];
-}
 
- */
 + (CVPixelBufferRef) newPixelBufferFromCGImage2: (CGImageRef) image andFrameSize:(CGSize)frameSize
 {
  //   frameSize.height=848;
@@ -324,7 +263,7 @@
     
     AVMutableCompositionTrack *compositionCommentaryTrack = [mixComposition addMutableTrackWithMediaType:AVMediaTypeAudio
                                                                                         preferredTrackID:kCMPersistentTrackID_Invalid];
-    [compositionCommentaryTrack insertTimeRange:CMTimeRangeMake(kCMTimeZero, audioAsset.duration)
+    [compositionCommentaryTrack insertTimeRange:CMTimeRangeMake(kCMTimeZero, videoAsset.duration)
                                         ofTrack:[[audioAsset tracksWithMediaType:AVMediaTypeAudio] objectAtIndex:0]
                                          atTime:kCMTimeZero error:nil];
     
@@ -337,7 +276,7 @@
     AVAssetExportSession* _assetExport = [[AVAssetExportSession alloc] initWithAsset:mixComposition
                                                                           presetName:AVAssetExportPresetPassthrough];
     
-    NSString* videoName = @"export.mov";
+    NSString* videoName = @"SlideShowWithMusic.m4v";
     
     NSString *exportPath = [NSTemporaryDirectory() stringByAppendingPathComponent:videoName];
     NSURL    *exportUrl = [NSURL fileURLWithPath:exportPath];
@@ -354,7 +293,7 @@
     
     [_assetExport exportAsynchronouslyWithCompletionHandler:
      ^(void ) {      
-         // your completion code here
+        
      }];
      
      

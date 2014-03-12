@@ -12,6 +12,7 @@
 #import "ELCAssetTablePicker.h"
 #import "ELCAlbumPickerController.h"
 #import <CoreLocation/CoreLocation.h>
+#import "MemoryUtil.h"
 
 @implementation ELCImagePickerController
 
@@ -147,11 +148,28 @@
 }
 
 
+- (void)selectedAssetsMarch9:(NSArray *)assets
+{
+		if (_imagePickerDelegate != nil && [_imagePickerDelegate respondsToSelector:@selector(elcImagePickerController:didFinishPickingMediaWithInfo:)]) {
+		[_imagePickerDelegate performSelector:@selector(elcImagePickerController:didFinishPickingMediaWithInfo:) withObject:self withObject:assets];
+	} else {
+        [self popToRootViewControllerAnimated:NO];
+    }
+}
+
+
+
+
+
+
+
+
 - (void)selectedAssets:(NSArray *)assets
 {
 	NSMutableArray *returnArray = [[NSMutableArray alloc] init];
 	
 	for(ALAsset *asset in assets) {
+        [MemoryUtil print_free_memory];
 		id obj = [asset valueForProperty:ALAssetPropertyType];
 		if (!obj) {
 			continue;
