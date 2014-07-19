@@ -56,7 +56,7 @@ NSString *const CellIdForDeviceName = @"deviceName";
 
     AppDelegate *delegate = (AppDelegate *)[UIApplication sharedApplication].delegate;
     _chromecastController = delegate.chromecastDeviceController;
-    self.navigationItem.rightBarButtonItem = _chromecastController.chromecastBarButton;
+   // self.navigationItem.rightBarButtonItem = _chromecastController.chromecastBarButton;
     //Add cast button
     if (_chromecastController.deviceScanner.devices.count > 0) {
         // _buttonbar = _chromecastController.chromecastBarButton;
@@ -90,7 +90,7 @@ NSString *const CellIdForDeviceName = @"deviceName";
     return self.castDeviceController.deviceScanner.devices.count;
   } else {
     self.title =
-        [NSString stringWithFormat:@"Connected to %@", self.castDeviceController.deviceName];
+        [NSString stringWithFormat:@"%@", self.castDeviceController.deviceName];
     return 2;
   }
 }

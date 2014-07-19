@@ -102,8 +102,6 @@
         
     
     }
-    if (_chromecastController.deviceManager.isConnectedToApp  && _listenToMusic)
-        [self pickMusic];
     
 }
 
@@ -131,7 +129,13 @@
 - (void) pickMusic
     
  {
-        
+     if (!_chromecastController.deviceManager.isConnectedToApp)
+     {
+         DeviceViewController *vc = [self.storyboard instantiateViewControllerWithIdentifier:@"devies"];
+         [self presentViewController:vc animated:YES completion:nil];
+     }
+
+        _bDone = YES;
 		MPMediaPickerController *picker =
         [[MPMediaPickerController alloc] initWithMediaTypes: MPMediaTypeMusic];
 		
@@ -166,6 +170,7 @@
 
 - (void)loadingMusic:(MPMediaItemCollection *)mediaItemCollection
 {
+    _bDone = NO;
     
     for(int i=0; i< self.objects.count; i++)
     {
@@ -180,7 +185,38 @@
         duration = asset2.duration;
         float fLenInSeconds = CMTimeGetSeconds(duration);
         NSLog(@"media legth seconds = %f", CMTimeGetSeconds(duration));
-        sleep(fLenInSeconds);            }
+        NSString *type = _chromecastController.type;
+        BOOL songStarted = NO;
+        NSLog(@"-------------------");
+        sleep(5);
+         NSTimeInterval seconds =  (_chromecastController.streamPosition);
+        NSLog(@"%f",seconds);
+        NSLog(type);
+
+        
+        
+       while( _bDone == NO && (songStarted==NO ||  [type isEqualToString:@"music"]) && (songStarted == NO || seconds >0.0 ))
+        {
+        sleep(1);
+            seconds =  (_chromecastController.streamPosition);
+            if (seconds > 0)
+            {
+                type = _chromecastController.type;
+                songStarted = YES;
+            }
+            
+            NSLog(@"%f",seconds);
+            
+        }
+        NSLog(@"-------------------");
+        seconds = (NSInteger) round(_chromecastController.streamPosition);
+        NSLog(@"%d",(int)seconds);
+        NSLog(type);
+              NSLog(@"-------------------");
+        
+        if (_bDone ==YES || ![type isEqualToString:@"music"])
+            return;
+    }
     
     
 }
@@ -239,7 +275,7 @@
          
          NSString * url = [NSString stringWithFormat:@"%@%@%@",@"http://",[NetworkUtil getIPAddress:TRUE],@":7083/exported.mov"];
 
-       
+              _chromecastController.type = @"music";
          
          [_chromecastController loadMedia:[NSURL URLWithString :url ]
                              thumbnailURL:thumbURL

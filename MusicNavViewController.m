@@ -3,7 +3,6 @@
 //  MediaCast
 //
 //  Created by david davis on 3/2/14.
-//  Copyright (c) 2014 Google Inc. All rights reserved.
 //
 
 #import "MusicNavViewController.h"
@@ -191,11 +190,11 @@
 
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
 {
-    if ([[segue identifier] isEqualToString:@"showDetail"]) {
-        NSIndexPath *indexPath = [self.tableView indexPathForSelectedRow];
+  //  if ([[segue identifier] isEqualToString:@"showDetail"]) {
+    //    NSIndexPath *indexPath = [self.tableView indexPathForSelectedRow];
       //dmd  NSDate *object = _objects[indexPath.row];
  //dmd       [[segue destinationViewController] setDetailItem:object];
-    }
+   // }
 }
 
 

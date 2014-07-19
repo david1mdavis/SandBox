@@ -3,13 +3,13 @@
 //  MediaCast
 //
 //  Created by david davis on 3/2/14.
-//  Copyright (c) 2014 Google Inc. All rights reserved.
 //
 
 #import <UIKit/UIKit.h>
 #import <GoogleCast/GoogleCast.h>
-#import <GPUImage/GPUImage.h>
 
+
+//#import <GPUImage/
 #import "ChromecastDeviceController.h"
 #import "AppDelegate.h"
 #import <AVFoundation/AVFoundation.h>

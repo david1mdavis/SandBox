@@ -8,7 +8,12 @@
 
 #import <UIKit/UIKit.h>
 #import <GoogleCast/GoogleCast.h>
-#import <GPUImage/GPUImage.h>
+//#import <GPUImage/GPUImage.h>
+
+#import <GPUImage.h>
+
+
+
 #import "Media.h"
 #import "ChromecastDeviceController.h"
 #import "AppDelegate.h"

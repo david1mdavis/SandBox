@@ -7,12 +7,13 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		63066A23196BEC6F00FDB7BA /* GoogleCast.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 63066A22196BEC6F00FDB7BA /* GoogleCast.framework */; };
+		634C649E196CAAFD0052B661 /* libGPUImage.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 634C649D196CAAFD0052B661 /* libGPUImage.a */; };
 		872D441C18C1A9A20097B1F0 /* SimpleImageFetcher.m in Sources */ = {isa = PBXBuildFile; fileRef = 872D440C18C1A9A20097B1F0 /* SimpleImageFetcher.m */; };
 		872D441D18C1A9A20097B1F0 /* VolumeChangeController.m in Sources */ = {isa = PBXBuildFile; fileRef = 872D440E18C1A9A20097B1F0 /* VolumeChangeController.m */; };
 		872D441E18C1A9A20097B1F0 /* DeviceTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 872D441018C1A9A20097B1F0 /* DeviceTableViewController.m */; };
 		872D442018C1A9A20097B1F0 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 872D441418C1A9A20097B1F0 /* AppDelegate.m */; };
 		872D442118C1A9A20097B1F0 /* Main_iPhone.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 872D441518C1A9A20097B1F0 /* Main_iPhone.storyboard */; };
-		872D442218C1A9A20097B1F0 /* Main_iPad.storyboard3 in Resources */ = {isa = PBXBuildFile; fileRef = 872D441618C1A9A20097B1F0 /* Main_iPad.storyboard3 */; };
 		872D442318C1A9A20097B1F0 /* VideotViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 872D441818C1A9A20097B1F0 /* VideotViewController.m */; };
 		872D442418C1A9A20097B1F0 /* musicViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 872D441A18C1A9A20097B1F0 /* musicViewController.m */; };
 		872D442818C1B1310097B1F0 /* ChromecastDeviceController.m in Sources */ = {isa = PBXBuildFile; fileRef = 872D442718C1B1310097B1F0 /* ChromecastDeviceController.m */; };
@@ -167,15 +168,12 @@
 		879EDE3418B74DA9006A1735 /* AVFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 879EDE3318B74DA9006A1735 /* AVFoundation.framework */; };
 		87C7D5C018CD01F500FE6BB9 /* MemoryUtil.m in Sources */ = {isa = PBXBuildFile; fileRef = 87C7D5BF18CD01F500FE6BB9 /* MemoryUtil.m */; };
 		87C7D5C218CD2AE700FE6BB9 /* stack_of_photos-50.png in Resources */ = {isa = PBXBuildFile; fileRef = 87C7D5C118CD2AE600FE6BB9 /* stack_of_photos-50.png */; };
-		87C7D5C418CEBBBF00FE6BB9 /* libGPUImage.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 87C7D5C318CEBBBF00FE6BB9 /* libGPUImage.a */; };
-		87F1D42F18BA12C400EB1C42 /* GoogleCast.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 87F1D42E18BA12C400EB1C42 /* GoogleCast.framework */; };
 		CC34F3D41885E326007E3FFC /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CC34F3D31885E326007E3FFC /* Foundation.framework */; };
 		CC34F3D61885E326007E3FFC /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CC34F3D51885E326007E3FFC /* CoreGraphics.framework */; };
 		CC34F3D81885E326007E3FFC /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CC34F3D71885E326007E3FFC /* UIKit.framework */; };
 		CC34F3DE1885E326007E3FFC /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = CC34F3DC1885E326007E3FFC /* InfoPlist.strings */; };
 		CC34F3E01885E326007E3FFC /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = CC34F3DF1885E326007E3FFC /* main.m */; };
-		CC34F3E71885E326007E3FFC /* Main_iPhone.storyboard1 in Resources */ = {isa = PBXBuildFile; fileRef = CC34F3E51885E326007E3FFC /* Main_iPhone.storyboard1 */; };
-		CC34F3EA1885E326007E3FFC /* Main_iPad.storyboard2 in Resources */ = {isa = PBXBuildFile; fileRef = CC34F3E81885E326007E3FFC /* Main_iPad.storyboard2 */; };
+		CC34F3EA1885E326007E3FFC /* Main_iPad.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = CC34F3E81885E326007E3FFC /* Main_iPad.storyboard */; };
 		CC34F3EF1885E326007E3FFC /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = CC34F3EE1885E326007E3FFC /* Images.xcassets */; };
 		CC34F3F61885E326007E3FFC /* XCTest.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CC34F3F51885E326007E3FFC /* XCTest.framework */; };
 		CC34F3F71885E326007E3FFC /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CC34F3D31885E326007E3FFC /* Foundation.framework */; };
@@ -189,6 +187,27 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
+		63066A2D196BEE4600FDB7BA /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 63066A26196BEE4500FDB7BA /* GPUImage.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = BCF1A33414DDB1EC00852800;
+			remoteInfo = GPUImage;
+		};
+		63066A2F196BEE4600FDB7BA /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 63066A26196BEE4500FDB7BA /* GPUImage.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = BCF1A34414DDB1EC00852800;
+			remoteInfo = GPUImageTests;
+		};
+		63066A31196BEE4600FDB7BA /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 63066A26196BEE4500FDB7BA /* GPUImage.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = BCE209E51943F20C002FEED8;
+			remoteInfo = GPUImageFramework;
+		};
 		CC34F3F91885E326007E3FFC /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = CC34F3C81885E326007E3FFC /* Project object */;
@@ -199,6 +218,9 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		63066A22196BEC6F00FDB7BA /* GoogleCast.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = GoogleCast.framework; sourceTree = "<group>"; };
+		63066A26196BEE4500FDB7BA /* GPUImage.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = GPUImage.xcodeproj; path = "../../Downloads/GPUImage-master/framework/GPUImage.xcodeproj"; sourceTree = "<group>"; };
+		634C649D196CAAFD0052B661 /* libGPUImage.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libGPUImage.a; path = "../../Downloads/GPUImage-master/build/Debug-iphonesimulator/libGPUImage.a"; sourceTree = "<group>"; };
 		872D440B18C1A9A20097B1F0 /* SimpleImageFetcher.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SimpleImageFetcher.h; path = HelloVideoGoogleCast/SimpleImageFetcher.h; sourceTree = "<group>"; };
 		872D440C18C1A9A20097B1F0 /* SimpleImageFetcher.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SimpleImageFetcher.m; path = HelloVideoGoogleCast/SimpleImageFetcher.m; sourceTree = "<group>"; };
 		872D440D18C1A9A20097B1F0 /* VolumeChangeController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = VolumeChangeController.h; path = HelloVideoGoogleCast/VolumeChangeController.h; sourceTree = "<group>"; };
@@ -208,7 +230,6 @@
 		872D441118C1A9A20097B1F0 /* AppDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
 		872D441418C1A9A20097B1F0 /* AppDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
 		872D441518C1A9A20097B1F0 /* Main_iPhone.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Main_iPhone.storyboard; sourceTree = "<group>"; };
-		872D441618C1A9A20097B1F0 /* Main_iPad.storyboard3 */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = Main_iPad.storyboard3; sourceTree = "<group>"; };
 		872D441718C1A9A20097B1F0 /* VideosViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = VideosViewController.h; path = HelloVideoGoogleCast/VideosViewController.h; sourceTree = "<group>"; };
 		872D441818C1A9A20097B1F0 /* VideotViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = VideotViewController.m; path = HelloVideoGoogleCast/VideotViewController.m; sourceTree = "<group>"; };
 		872D441918C1A9A20097B1F0 /* MusicViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MusicViewController.h; path = HelloVideoGoogleCast/MusicViewController.h; sourceTree = "<group>"; };
@@ -424,9 +445,6 @@
 		87C7D5BE18CD01F500FE6BB9 /* MemoryUtil.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MemoryUtil.h; sourceTree = "<group>"; };
 		87C7D5BF18CD01F500FE6BB9 /* MemoryUtil.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MemoryUtil.m; sourceTree = "<group>"; };
 		87C7D5C118CD2AE600FE6BB9 /* stack_of_photos-50.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "stack_of_photos-50.png"; sourceTree = "<group>"; };
-		87C7D5C318CEBBBF00FE6BB9 /* libGPUImage.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libGPUImage.a; path = "../../../Downloads/GPUImage-master/build/Debug-iphoneos/libGPUImage.a"; sourceTree = "<group>"; };
-		87F1D42A18BA11B000EB1C42 /* GPUImage.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = GPUImage.framework; sourceTree = "<group>"; };
-		87F1D42E18BA12C400EB1C42 /* GoogleCast.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = GoogleCast.framework; sourceTree = "<group>"; };
 		CC34F3D01885E326007E3FFC /* CastMedia.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = CastMedia.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		CC34F3D31885E326007E3FFC /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		CC34F3D51885E326007E3FFC /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
@@ -435,8 +453,7 @@
 		CC34F3DD1885E326007E3FFC /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		CC34F3DF1885E326007E3FFC /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		CC34F3E11885E326007E3FFC /* MediaCast-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "MediaCast-Prefix.pch"; sourceTree = "<group>"; };
-		CC34F3E61885E326007E3FFC /* Base */ = {isa = PBXFileReference; lastKnownFileType = text.xml; name = Base; path = Base.lproj/Main_iPhone.storyboard1; sourceTree = "<group>"; };
-		CC34F3E91885E326007E3FFC /* Base */ = {isa = PBXFileReference; lastKnownFileType = text.xml; name = Base; path = Base.lproj/Main_iPad.storyboard2; sourceTree = "<group>"; };
+		CC34F3E91885E326007E3FFC /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main_iPad.storyboard; sourceTree = "<group>"; };
 		CC34F3EE1885E326007E3FFC /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
 		CC34F3F41885E326007E3FFC /* CastMediaTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = CastMediaTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		CC34F3F51885E326007E3FFC /* XCTest.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = XCTest.framework; path = Library/Frameworks/XCTest.framework; sourceTree = DEVELOPER_DIR; };
@@ -454,10 +471,9 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				87C7D5C418CEBBBF00FE6BB9 /* libGPUImage.a in Frameworks */,
+				63066A23196BEC6F00FDB7BA /* GoogleCast.framework in Frameworks */,
 				876967B018BF335F00798671 /* MediaPlayer.framework in Frameworks */,
 				876967AE18BF334B00798671 /* AudioToolbox.framework in Frameworks */,
-				87F1D42F18BA12C400EB1C42 /* GoogleCast.framework in Frameworks */,
 				8793651718B8255500AD0B3C /* OpenGLES.framework in Frameworks */,
 				8793651518B8252A00AD0B3C /* QuartzCore.framework in Frameworks */,
 				8793651318B8251700AD0B3C /* CoreMedia.framework in Frameworks */,
@@ -467,6 +483,7 @@
 				879EDE1818B6DBBA006A1735 /* GCDAsyncSocket.m in Frameworks */,
 				CC34F3D61885E326007E3FFC /* CoreGraphics.framework in Frameworks */,
 				CC34F3D81885E326007E3FFC /* UIKit.framework in Frameworks */,
+				634C649E196CAAFD0052B661 /* libGPUImage.a in Frameworks */,
 				CC34F3D41885E326007E3FFC /* Foundation.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -484,6 +501,16 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		63066A27196BEE4500FDB7BA /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				63066A2E196BEE4600FDB7BA /* libGPUImage.a */,
+				63066A30196BEE4600FDB7BA /* GPUImageTests.octest */,
+				63066A32196BEE4600FDB7BA /* GPUImage.framework */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
 		872D442518C1A9E30097B1F0 /* images */ = {
 			isa = PBXGroup;
 			children = (
@@ -866,9 +893,17 @@
 			name = Resources;
 			sourceTree = "<group>";
 		};
+		87B397E718D138BF0056F741 /* GPUImage */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = GPUImage;
+			sourceTree = "<group>";
+		};
 		CC34F3C71885E326007E3FFC = {
 			isa = PBXGroup;
 			children = (
+				87B397E718D138BF0056F741 /* GPUImage */,
 				872D44E218C53E480097B1F0 /* OpenSourceProjects */,
 				872D44E118C53E100097B1F0 /* Videos */,
 				872D44DF18C53CB00097B1F0 /* Photos */,
@@ -894,11 +929,11 @@
 		CC34F3D21885E326007E3FFC /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
-				87C7D5C318CEBBBF00FE6BB9 /* libGPUImage.a */,
+				63066A22196BEC6F00FDB7BA /* GoogleCast.framework */,
+				634C649D196CAAFD0052B661 /* libGPUImage.a */,
+				63066A26196BEE4500FDB7BA /* GPUImage.xcodeproj */,
 				876967AF18BF335E00798671 /* MediaPlayer.framework */,
 				876967AD18BF334B00798671 /* AudioToolbox.framework */,
-				87F1D42E18BA12C400EB1C42 /* GoogleCast.framework */,
-				87F1D42A18BA11B000EB1C42 /* GPUImage.framework */,
 				8793651618B8255500AD0B3C /* OpenGLES.framework */,
 				8793651418B8252A00AD0B3C /* QuartzCore.framework */,
 				8793651218B8251700AD0B3C /* CoreMedia.framework */,
@@ -919,10 +954,8 @@
 				872D441118C1A9A20097B1F0 /* AppDelegate.h */,
 				872D441418C1A9A20097B1F0 /* AppDelegate.m */,
 				CC34F3EE1885E326007E3FFC /* Images.xcassets */,
-				872D441618C1A9A20097B1F0 /* Main_iPad.storyboard3 */,
-				CC34F3E81885E326007E3FFC /* Main_iPad.storyboard2 */,
+				CC34F3E81885E326007E3FFC /* Main_iPad.storyboard */,
 				872D441518C1A9A20097B1F0 /* Main_iPhone.storyboard */,
-				CC34F3E51885E326007E3FFC /* Main_iPhone.storyboard1 */,
 				CC34F3DA1885E326007E3FFC /* Supporting Files */,
 				879EDE1918B70A28006A1735 /* Web */,
 			);
@@ -1007,9 +1040,9 @@
 		CC34F3C81885E326007E3FFC /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
-				CLASSPREFIX = HGCV;
-				LastUpgradeCheck = 0500;
-				ORGANIZATIONNAME = "Google Inc";
+				CLASSPREFIX = CM;
+				LastUpgradeCheck = 0600;
+				ORGANIZATIONNAME = CastMedia;
 				TargetAttributes = {
 					CC34F3F31885E326007E3FFC = {
 						TestTargetID = CC34F3CF1885E326007E3FFC;
@@ -1027,6 +1060,12 @@
 			mainGroup = CC34F3C71885E326007E3FFC;
 			productRefGroup = CC34F3D11885E326007E3FFC /* Products */;
 			projectDirPath = "";
+			projectReferences = (
+				{
+					ProductGroup = 63066A27196BEE4500FDB7BA /* Products */;
+					ProjectRef = 63066A26196BEE4500FDB7BA /* GPUImage.xcodeproj */;
+				},
+			);
 			projectRoot = "";
 			targets = (
 				CC34F3CF1885E326007E3FFC /* CastMedia */,
@@ -1034,6 +1073,30 @@
 			);
 		};
 /* End PBXProject section */
+
+/* Begin PBXReferenceProxy section */
+		63066A2E196BEE4600FDB7BA /* libGPUImage.a */ = {
+			isa = PBXReferenceProxy;
+			fileType = archive.ar;
+			path = libGPUImage.a;
+			remoteRef = 63066A2D196BEE4600FDB7BA /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		63066A30196BEE4600FDB7BA /* GPUImageTests.octest */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.cfbundle;
+			path = GPUImageTests.octest;
+			remoteRef = 63066A2F196BEE4600FDB7BA /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		63066A32196BEE4600FDB7BA /* GPUImage.framework */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.framework;
+			path = GPUImage.framework;
+			remoteRef = 63066A31196BEE4600FDB7BA /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+/* End PBXReferenceProxy section */
 
 /* Begin PBXResourcesBuildPhase section */
 		CC34F3CE1885E326007E3FFC /* Resources */ = {
@@ -1043,7 +1106,6 @@
 				8793653818B9945500AD0B3C /* ELCAlbumPickerController.xib in Resources */,
 				872D448218C1CADA0097B1F0 /* video_thumb_mini.png in Resources */,
 				872D44B018C1CADA0097B1F0 /* icon-ios_democast_120.png in Resources */,
-				872D442218C1A9A20097B1F0 /* Main_iPad.storyboard3 in Resources */,
 				879EDE1C18B70A28006A1735 /* index.html in Resources */,
 				879EDE1D18B70A28006A1735 /* video.mp4 in Resources */,
 				872D449718C1CADA0097B1F0 /* drawer_shadow.png in Resources */,
@@ -1113,13 +1175,12 @@
 				872D448918C1CADA0097B1F0 /* cast_outline_white.png in Resources */,
 				872D449218C1CADA0097B1F0 /* cast_solid_white@2x.png in Resources */,
 				872D449418C1CADA0097B1F0 /* cast_solid@2x.png in Resources */,
-				CC34F3EA1885E326007E3FFC /* Main_iPad.storyboard2 in Resources */,
+				CC34F3EA1885E326007E3FFC /* Main_iPad.storyboard in Resources */,
 				CC34F3EF1885E326007E3FFC /* Images.xcassets in Resources */,
 				872D447518C1CADA0097B1F0 /* icon_cast_on.png in Resources */,
 				872D448418C1CADA0097B1F0 /* actionbar_logo.png in Resources */,
 				872D448F18C1CADA0097B1F0 /* cast_solid_custom.png in Resources */,
 				872D44A318C1CADA0097B1F0 /* list_outline.png in Resources */,
-				CC34F3E71885E326007E3FFC /* Main_iPhone.storyboard1 in Resources */,
 				872D449C18C1CADA0097B1F0 /* icon_photos_black@2x.png in Resources */,
 				872D447E18C1CADA0097B1F0 /* icon_settings_outline_black.png in Resources */,
 				872D44BD18C1CADA0097B1F0 /* icon-cast-identified.png in Resources */,
@@ -1248,20 +1309,12 @@
 			name = InfoPlist.strings;
 			sourceTree = "<group>";
 		};
-		CC34F3E51885E326007E3FFC /* Main_iPhone.storyboard1 */ = {
-			isa = PBXVariantGroup;
-			children = (
-				CC34F3E61885E326007E3FFC /* Base */,
-			);
-			name = Main_iPhone.storyboard1;
-			sourceTree = "<group>";
-		};
-		CC34F3E81885E326007E3FFC /* Main_iPad.storyboard2 */ = {
+		CC34F3E81885E326007E3FFC /* Main_iPad.storyboard */ = {
 			isa = PBXVariantGroup;
 			children = (
 				CC34F3E91885E326007E3FFC /* Base */,
 			);
-			name = Main_iPad.storyboard2;
+			name = Main_iPad.storyboard;
 			sourceTree = "<group>";
 		};
 		CC34F3FE1885E326007E3FFC /* InfoPlist.strings */ = {
@@ -1279,7 +1332,11 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
-				ARCHS = "$(ARCHS_STANDARD_INCLUDING_64_BIT)";
+				ARCHS = (
+					armv7,
+					armv7s,
+					arm6,
+				);
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
 				CLANG_CXX_LIBRARY = "libc++";
 				CLANG_ENABLE_MODULES = YES;
@@ -1309,10 +1366,16 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
+				HEADER_SEARCH_PATHS = (
+					"$(inherited)",
+					"/Applications/Xcode6-Beta3.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/include",
+					"\"$(SRCROOT)/../../Downloads/GPUImage-master 2/framework/Source\"/**",
+				);
 				IPHONEOS_DEPLOYMENT_TARGET = 6.1;
 				ONLY_ACTIVE_ARCH = YES;
 				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = "1,2";
+				USER_HEADER_SEARCH_PATHS = "/Users/david/Downloads/GPUImage-master 2/framework/Source/";
 				VALID_ARCHS = "armv7 armv7s arm6";
 			};
 			name = Debug;
@@ -1321,7 +1384,11 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
-				ARCHS = "$(ARCHS_STANDARD_INCLUDING_64_BIT)";
+				ARCHS = (
+					armv7,
+					armv7s,
+					arm6,
+				);
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
 				CLANG_CXX_LIBRARY = "libc++";
 				CLANG_ENABLE_MODULES = YES;
@@ -1345,9 +1412,16 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
+				HEADER_SEARCH_PATHS = (
+					"$(inherited)",
+					"/Applications/Xcode6-Beta3.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/include",
+					"\"$(SRCROOT)/../../Downloads/GPUImage-master 2/framework/Source\"/**",
+				);
 				IPHONEOS_DEPLOYMENT_TARGET = 6.1;
+				ONLY_ACTIVE_ARCH = YES;
 				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = "1,2";
+				USER_HEADER_SEARCH_PATHS = "/Users/david/Downloads/GPUImage-master 2/framework/Source/";
 				VALIDATE_PRODUCT = YES;
 				VALID_ARCHS = "armv7 armv7s arm6";
 			};
@@ -1356,24 +1430,31 @@
 		CC34F4061885E327007E3FFC /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					.,
 					..,
-					"\\\\\\\\\\\\\\\"$(SRCROOT)/..\\\\\\\\\\\\\\\"",
+					"\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\"$(SRCROOT)/..\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\"",
 					"/Users/daviddavis/Documents/backup/GoogleCastFramework-2.0-Release",
-					"/Users/daviddavis/Documents/backup/GPUImage-master/build",
-					"/Users/daviddavis/Documents/sandbox/CastHelloVideo-ios-master",
+					/Users/daviddavis/Downloads,
+					"$(PROJECT_DIR)",
+					"/Users/david/Downloads/GPUImage-master",
+					"2/build/Debug-iphoneos",
 				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "HelloVideoGoogleCast/CastMedia-Prefix.pch";
+				HEADER_SEARCH_PATHS = (
+					"$(inherited)",
+					/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/include,
+					"../GPUImage-master/framework/**",
+				);
 				INFOPLIST_FILE = "HelloVideoGoogleCast/CastMedia-Info.plist";
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
-					"/Users/daviddavis/Downloads/GPUImage-master/build/Debug-iphoneos",
+					"/Users/daviddavis/Documents/sandbox/GPUImage-master/framework/../build/Debug-iphoneos",
+					"/Users/david/Downloads/GPUImage-master/build/Debug-iphonesimulator",
 				);
 				OTHER_LDFLAGS = "-ObjC";
 				PRODUCT_NAME = CastMedia;
@@ -1384,24 +1465,31 @@
 		CC34F4071885E327007E3FFC /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					.,
 					..,
-					"\\\\\\\\\\\\\\\"$(SRCROOT)/..\\\\\\\\\\\\\\\"",
+					"\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\"$(SRCROOT)/..\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\"",
 					"/Users/daviddavis/Documents/backup/GoogleCastFramework-2.0-Release",
-					"/Users/daviddavis/Documents/backup/GPUImage-master/build",
-					"/Users/daviddavis/Documents/sandbox/CastHelloVideo-ios-master",
+					/Users/daviddavis/Downloads,
+					"$(PROJECT_DIR)",
+					"/Users/david/Downloads/GPUImage-master",
+					"2/build/Debug-iphoneos",
 				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "HelloVideoGoogleCast/CastMedia-Prefix.pch";
+				HEADER_SEARCH_PATHS = (
+					"$(inherited)",
+					/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/include,
+					"../GPUImage-master/framework/**",
+				);
 				INFOPLIST_FILE = "HelloVideoGoogleCast/CastMedia-Info.plist";
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
-					"/Users/daviddavis/Downloads/GPUImage-master/build/Debug-iphoneos",
+					"/Users/daviddavis/Documents/sandbox/GPUImage-master/framework/../build/Debug-iphoneos",
+					"/Users/david/Downloads/GPUImage-master/build/Debug-iphonesimulator",
 				);
 				OTHER_LDFLAGS = "-ObjC";
 				PRODUCT_NAME = CastMedia;
@@ -1412,7 +1500,6 @@
 		CC34F4091885E327007E3FFC /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ARCHS = "$(ARCHS_STANDARD_INCLUDING_64_BIT)";
 				BUNDLE_LOADER = "$(BUILT_PRODUCTS_DIR)/HelloVideoGoogleCast.app/HelloVideoGoogleCast";
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(SDKROOT)/Developer/Library/Frameworks",
@@ -1425,9 +1512,15 @@
 					"DEBUG=1",
 					"$(inherited)",
 				);
+				HEADER_SEARCH_PATHS = (
+					"$(inherited)",
+					/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/include,
+					"../GPUImage-master/framework/**",
+				);
 				INFOPLIST_FILE = "HelloVideoGoogleCastTests/CastMediaTests-Info.plist";
 				PRODUCT_NAME = CastMediaTests;
 				TEST_HOST = "$(BUNDLE_LOADER)";
+				USER_HEADER_SEARCH_PATHS = "";
 				WRAPPER_EXTENSION = xctest;
 			};
 			name = Debug;
@@ -1435,7 +1528,6 @@
 		CC34F40A1885E327007E3FFC /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ARCHS = "$(ARCHS_STANDARD_INCLUDING_64_BIT)";
 				BUNDLE_LOADER = "$(BUILT_PRODUCTS_DIR)/HelloVideoGoogleCast.app/HelloVideoGoogleCast";
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(SDKROOT)/Developer/Library/Frameworks",
@@ -1444,9 +1536,15 @@
 				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "HelloVideoGoogleCast/HelloVideoGoogleCast-Prefix.pch";
+				HEADER_SEARCH_PATHS = (
+					"$(inherited)",
+					/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/include,
+					"../GPUImage-master/framework/**",
+				);
 				INFOPLIST_FILE = "HelloVideoGoogleCastTests/CastMediaTests-Info.plist";
 				PRODUCT_NAME = CastMediaTests;
 				TEST_HOST = "$(BUNDLE_LOADER)";
+				USER_HEADER_SEARCH_PATHS = "";
 				WRAPPER_EXTENSION = xctest;
 			};
 			name = Release;

@@ -13,6 +13,8 @@
 // limitations under the License.
 
 #import <GoogleCast/GoogleCast.h>
+
+
 #import <Foundation/Foundation.h>
 //#import "Media.h"
 #import "VolumeChangeController.h"
@@ -78,6 +80,7 @@ typedef NS_ENUM(NSInteger, ChromecastControllerFeatures) {
                                                  GCKDeviceManagerDelegate,
                                                  GCKMediaControlChannelDelegate,
                                                  VolumeChangeControllerDelegate>
+@property NSString *type;
 
 @property GCKMediaControlChannel *mediaControlChannel;
 

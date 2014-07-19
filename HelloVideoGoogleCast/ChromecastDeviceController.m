@@ -313,6 +313,7 @@ static NSString *const kReceiverAppID = @"9D100972";  //Replace with your app id
     return NO;
   }
 
+   
   GCKMediaMetadata *metadata = [[GCKMediaMetadata alloc] init];
   if (title) {
     [metadata setString:title forKey:kGCKMetadataKeyTitle];

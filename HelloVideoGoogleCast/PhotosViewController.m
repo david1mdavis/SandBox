@@ -112,95 +112,6 @@
 
 
 
-- (void)elcImagePickerControllerMarch9:(ELCImagePickerController *)picker didFinishPickingMediaWithInfo:(NSArray *)assets
-{
-    [self dismissViewControllerAnimated:YES completion:nil];
-	dispatch_async(dispatch_get_main_queue(), ^{
-        _fLenInSeconds = 4.0/[assets count];
-        //  updateTimer = [NSTimer scheduledTimerWithTimeInterval:0.01428 target:self selector:@selector(GameUpdate) userInfo:nil repeats:YES];
-        _updateFilterTimer = [NSTimer scheduledTimerWithTimeInterval:1 target:self selector:@selector(showTime) userInfo:nil repeats:YES];
-        self.filterProgress.hidden = false;
-        [self.filterProgress setProgress:0.0 animated:TRUE];
-    });
-    
-    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
-        
-        int photocout = 0;
-        NSMutableArray* videoFileNameArray= [[NSMutableArray alloc] init];
-        CGSize maxPhotosize;
-        for(ALAsset *asset in assets) {{
-            
-            
-            
-            
-          //  [MemoryUtil print_free_memory];
-            id obj = [asset valueForProperty:ALAssetPropertyType];
-            if (!obj) {
-                continue;
-            }
-            
-            
-            //This method returns nil for assets from a shared photo stream that are not yet available locally. If the asset becomes available in the future, an ALAssetsLibraryChangedNotification notification is posted.
-            ALAssetRepresentation *assetRep = [asset defaultRepresentation];
-            
-            if(assetRep != nil) {
-                CGImageRef imgRef = nil;
-                //defaultRepresentation returns image as it appears in photo picker, rotated and sized,
-                //so use UIImageOrientationUp when creating our image below.
-                UIImageOrientation orientation = UIImageOrientationUp;
-                
-                
-                    orientation = [assetRep orientation];
-                
-                    imgRef = [assetRep fullScreenImage];
-                
-                UIImage *image = [UIImage imageWithCGImage:imgRef
-                                                   scale:1.0f
-                                             orientation:orientation];
-                
-                 NSString *fileName =[NSString stringWithFormat:@"temp%d.jpg",photocout];
-                
-                [videoFileNameArray addObject:fileName];
-                [FileUtil saveImage:image withName:fileName];
-                maxPhotosize.height = MAX(maxPhotosize.height,image.size.height);
-                maxPhotosize.width = MAX(maxPhotosize.width,image.size.width);
-                
-                image= nil;
-                photocout++;
-            }
-        }
-            
-                
-          
-            
-                
-            
-            //
-            
-        }
-        if (photocout>1){
-            
-            NSFileManager *fileManager = [NSFileManager defaultManager];
-            NSString *filePath = [NSTemporaryDirectory() stringByAppendingPathComponent:@"slideshow.m4v"];
-            NSError *error;
-            BOOL success = [fileManager removeItemAtPath:filePath error:&error];
-            //
-            _elcPicker=nil;
-            dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
-                [VideoUtil writeImagesAsMovie:[NSArray arrayWithArray:videoFileNameArray]  toPath:@"slideshow.m4v" maxSize:maxPhotosize];
-                [self castSlideShow];
-                
-                
-            });
-            return;
-        }
-        else
-            [self castPhoto];
-        //[self selectPhotos];
-    });
-}
-
-
 
 
 - (void)elcImagePickerController:(ELCImagePickerController *)picker didFinishPickingMediaWithInfo:(NSArray *)info
@@ -208,6 +119,8 @@
    [self dismissViewControllerAnimated:YES completion:nil];
 	dispatch_async(dispatch_get_main_queue(), ^{
         _fLenInSeconds = 4.0/[info count];
+        [_updateFilterTimer invalidate];
+        _updateFilterTimer = nil;
         //  updateTimer = [NSTimer scheduledTimerWithTimeInterval:0.01428 target:self selector:@selector(GameUpdate) userInfo:nil repeats:YES];
         _updateFilterTimer = [NSTimer scheduledTimerWithTimeInterval:1 target:self selector:@selector(showTime) userInfo:nil repeats:YES];
         self.filterProgress.hidden = false;
@@ -298,7 +211,7 @@
     NSError *error;
         
         
-        NSFileManager *fileManager = [NSFileManager defaultManager];
+       // NSFileManager *fileManager = [NSFileManager defaultManager];
         NSString *slideShow = [NSTemporaryDirectory() stringByAppendingPathComponent:@"slideshow.m4v"];
 
   
@@ -346,12 +259,22 @@
 
 -(void) castSlideShow{
     // [self castAlert];
+     dispatch_async(dispatch_get_main_queue(), ^{
     NSLog(@"Cast SlideShow");
     [_updateFilterTimer invalidate];
     _updateFilterTimer = nil;
     
     self.filterProgress.hidden = TRUE;
     self.videoProcessLabel.hidden = TRUE;
+         
+         [_updateFilterTimer invalidate];
+         _updateFilterTimer = nil;
+         
+         if (self.updateStreamTimer) {
+             [self.updateStreamTimer invalidate];
+             self.updateStreamTimer = nil;
+         }
+
     
     
     
@@ -361,28 +284,32 @@
     
     
     NSLog(@"Started HTTP Server on url %@", url);
-    NSString *type = @"Photo";
+   _chromecastController.type = @"Photo";
    // id object = type;
-    GCKMediaInformation *mediaInformation =
+  /*  GCKMediaInformation *mediaInformation =
     [[GCKMediaInformation alloc] initWithContentID:
      url
                                         streamType:GCKMediaStreamTypeNone
                                        contentType:@"video/mp4"
                                           metadata:metadata
                                     streamDuration:0
-                                        customData:(id)type];
+                                        customData:nil];
     [_chromecastController.mediaControlChannel loadMedia:mediaInformation autoplay:TRUE playPosition:0];
-    
    
-    dispatch_async(dispatch_get_main_queue(), ^{
-        [_updateFilterTimer invalidate];
-        _updateFilterTimer = nil;
-        
-        if (self.updateStreamTimer) {
-            [self.updateStreamTimer invalidate];
-            self.updateStreamTimer = nil;
-        }
-        _readyToShowInterface = YES;
+*/
+
+    
+    [_chromecastController loadMedia:[NSURL URLWithString :url ]
+                        thumbnailURL:nil
+                               title: @"slide show"
+                            subtitle: @"IPad/iPhone/iTouch"
+                            mimeType:@"video/mp4"
+                           startTime:0
+                            autoPlay:YES
+                          customData:nil];
+
+   
+           _readyToShowInterface = YES;
         
         
         
@@ -399,6 +326,22 @@
 }
 
 -(void) castPhoto{
+       _chromecastController.type = @"SinglePhoto";
+    [_updateFilterTimer invalidate];
+    _updateFilterTimer = nil;
+    
+    self.filterProgress.hidden = TRUE;
+    self.videoProcessLabel.hidden = TRUE;
+    
+    [_updateFilterTimer invalidate];
+    _updateFilterTimer = nil;
+    
+    if (self.updateStreamTimer) {
+        [self.updateStreamTimer invalidate];
+        self.updateStreamTimer = nil;
+    }
+    
+
     // [self castAlert];
     NSLog(@"Cast Video");
     GCKMediaMetadata *metadata = [[GCKMediaMetadata alloc] init];
@@ -423,7 +366,7 @@
     //cast video
  //   [_chromecastController.mediaControlChannel loadMedia:mediaInformation autoplay:FALSE playPosition:0];
       [_chromecastController.mediaControlChannel loadMedia:mediaInformation ];
-          [_chromecastController.mediaControlChannel loadMedia:mediaInformation ];
+     //     [_chromecastController.mediaControlChannel loadMedia:mediaInformation ];
     
         
     
@@ -462,30 +405,6 @@
 }
 
 - (void)initControls {
-  /*  UIBarButtonItem* playButton =
-    [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemPlay
-                                                  target:self
-                                                  action:@selector(playButtonClicked:)];
-    playButton.tintColor = [UIColor whiteColor];
-    UIBarButtonItem* pauseButton =
-    [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemPause
-                                                  target:self
-                                                  action:@selector(pauseButtonClicked:)];
-    pauseButton.tintColor = [UIColor whiteColor];
-    UIBarButtonItem* flexibleSpace =
-    [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemFlexibleSpace
-                                                  target:nil
-                                                  action:nil];
-    UIBarButtonItem* flexibleSpace2 =
-    [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemFlexibleSpace
-                                                  target:nil
-                                                  action:nil];
-    UIBarButtonItem* flexibleSpace3 =
-    [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemFlexibleSpace
-                                                  target:nil
-                                                  action:nil];
-    
-   */
     
     //self.slider = [[UISlider alloc] init];
     [self.slider addTarget:self
@@ -582,13 +501,14 @@
 - (void)updateInterfaceFromCast:(NSTimer*)timer {
     [_chromecastController updateStatsFromDevice];
     //_contentID	__NSCFString *	@"http://192.168.1.3:7083/slideshow.m4v"	0x21062600
-     NSString *type  = _chromecastController.mediaInformation.customData;
+     NSString *type  = _chromecastController.type;
      NSLog(type);
     if (type == nil || ![type isEqualToString:@"Photo"]){
         _slider.hidden = TRUE;
         
         _currTime.hidden = TRUE;
         _totalTime.hidden = TRUE;
+         [_playPauseButton setTitle:@"Play"forState:UIControlStateNormal];
         
         return;
     }
@@ -617,6 +537,7 @@
         [self.slider
          setValue:(_chromecastController.streamPosition / _chromecastController.streamDuration)
          animated:YES];
+       
     }
     if (_chromecastController.playerState == GCKMediaPlayerStatePaused ||
         _chromecastController.playerState == GCKMediaPlayerStateIdle) {
@@ -649,9 +570,16 @@
 
 #pragma mark - On - screen UI elements
 - (IBAction)pauseButtonClicked:(id)sender {
-    NSString *type  = _chromecastController.mediaInformation.customData;
-    if (type == nil && ![type isEqualToString:@"Photo"]){
+    if (!_chromecastController.deviceManager.isConnectedToApp)
+    {
+        DeviceViewController *vc = [self.storyboard instantiateViewControllerWithIdentifier:@"devies"];
+        [self presentViewController:vc animated:YES completion:nil];
+    }
+
+     NSString *type  = _chromecastController.type;
+    if (![type isEqualToString:@"Photo"]){
         [self castSlideShow];
+        NSLog(type);
         
     }
     if(_chromecastController.playerState == GCKMediaPlayerStatePaused)

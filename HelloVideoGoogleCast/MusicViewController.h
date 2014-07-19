@@ -36,6 +36,6 @@ AVAudioPlayerDelegate
 
 @property (weak, nonatomic) IBOutlet UIBarButtonItem *buttonitem;
 @property (weak, nonatomic) IBOutlet UIButton *orderPlayListbutton;
-
+@property BOOL bDone;
 @property NSMutableArray* objects;
 @end

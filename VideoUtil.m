@@ -17,7 +17,7 @@
     
     
     NSString *filename = [NSTemporaryDirectory() stringByAppendingPathComponent:[array objectAtIndex:0]];
-    UIImage *first1 = [UIImage imageWithContentsOfFile:filename];
+ //   UIImage *first1 = [UIImage imageWithContentsOfFile:filename];
     maxPhotosize.width = 640*2;
     maxPhotosize.height =480*2;
     
@@ -248,7 +248,7 @@
     if (width && height) { // test to make sure we have valid dimensions
         UIImage *image = [[UIImage alloc] initWithCIImage:ciImage];
 
-    
+    //dmd should this be moved
     UIGraphicsEndImageContext();
 }
 }
@@ -317,8 +317,8 @@
     
     CGFloat scaleFactor = (oldWidth > oldHeight) ? width / oldWidth : height / oldHeight;
     
-    CGFloat newHeight = oldHeight * scaleFactor;
-    CGFloat newWidth = oldWidth * scaleFactor;
+  //  CGFloat newHeight = oldHeight * scaleFactor;
+   // CGFloat newWidth = oldWidth * scaleFactor;
   //  CGSize newSize = CGSizeMake(newWidth, newHeight);
    
     return([UIImage imageWithCGImage:[image CGImage]

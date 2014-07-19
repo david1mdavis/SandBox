@@ -20,6 +20,112 @@
 @implementation VideosViewController
 
 
+
+//left2
+-(void)notifyApplicationDidEnterBackground:(NSNotification*)n
+{
+    [self applicationDidEnterBackground:[UIApplication sharedApplication]];
+}
+
+
+//came back1
+-(void)notifyApplicationWillEnterForeground:(NSNotification*)n
+{
+        if(_movieWriter)
+            _movieWriter.paused= FALSE;
+    [self applicationWillEnterForeground:[UIApplication sharedApplication]];
+}
+
+-(void)notifyApplicationDidFinishLaunching:(NSNotification*)n
+{
+    [self application:[UIApplication sharedApplication] didFinishLaunchingWithOptions: [n userInfo]];
+}
+
+//came back2
+-(void)notifyApplicationDidBecomeActive:(NSNotification*)n
+{
+    [self applicationDidBecomeActive:[UIApplication sharedApplication]];
+}
+//left 1
+-(void)notifyApplicationWillResignActive:(NSNotification*)n
+{
+    if(_movieWriter)
+        [_movieWriter cancelRecording];
+    
+    [self applicationWillResignActive:[UIApplication sharedApplication]];
+}
+
+-(void)notifyApplicationDidReceiveMemoryWarning:(NSNotification*)n
+{
+    [self applicationDidReceiveMemoryWarning:[UIApplication sharedApplication]];
+}
+
+-(void)notifyApplicationWillTerminate:(NSNotification*)n
+{
+    [self applicationWillTerminate:[UIApplication sharedApplication]];
+}
+
+-(void)configurationChanged
+{
+    // User has update application configuration panel
+    
+}
+
+- (void)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
+{
+    // Override point for customization after application launch.
+    
+}
+
+
+- (void)applicationWillResignActive:(UIApplication *)application
+{
+    /*
+     Sent when the application is about to move from active to inactive state. This can occur for certain types of temporary interruptions (such as an incoming phone call or SMS message) or when the user quits the application and it begins the transition to the background state.
+     Use this method to pause ongoing tasks, disable timers, and throttle down OpenGL ES frame rates. Games should use this method to pause the game.
+     */
+}
+
+
+- (void)applicationDidEnterBackground:(UIApplication *)application
+{
+    /*
+     Use this method to release shared resources, save user data, invalidate timers, and store enough application state information to restore your application to its current state in case it is terminated later.
+     If your application supports background execution, called instead of applicationWillTerminate: when the user quits.
+     */
+    
+}
+
+
+- (void)applicationWillEnterForeground:(UIApplication *)application
+{
+    /*
+     Called as part of  transition from the background to the inactive state: here you can undo many of the changes made on entering the background.
+     */
+}
+
+
+- (void)applicationDidBecomeActive:(UIApplication *)application
+{
+    /*
+     Restart any tasks that were paused (or not yet started) while the application was inactive. If the application was previously in the background, optionally refresh the user interface.
+     */
+   
+}
+
+
+/**
+ applicationWillTerminate: saves changes in the application's managed object context before the application terminates.
+ */
+- (void)applicationWillTerminate:(UIApplication *)application
+{
+}
+
+// try to clean up as much memory as possible. next step is to terminate app
+- (void)applicationDidReceiveMemoryWarning:(UIApplication *)application
+{
+}
+
 - (void)didConnectToDevice:(GCKDevice *)device {
     [_chromecastController updateToolbarForViewController:self];
 }
@@ -34,6 +140,8 @@
 }
 
 -(void)video {
+    [_updateFilterTimer invalidate];
+    _updateFilterTimer= nil;
     
     if (!_chromecastController.deviceManager.isConnectedToApp)
     {
@@ -70,16 +178,10 @@
 - (void)elcImagePickerController:(ELCImagePickerController *)picker didFinishPickingMediaWithInfo:(NSArray *)info
 {
     [self dismissViewControllerAnimated:YES completion:nil];
+    [_updateFilterTimer invalidate];
+    _updateFilterTimer = nil;
 	
-    /*    for (UIView *v in [_scrollView subviews]) {
-     [v removeFromSuperview];
-     }
-     
-     CGRect workingFrame = _scrollView.frame;
-     
-     workingFrame.origin.x = 0;
-     */
-    NSMutableArray *images = [NSMutableArray arrayWithCapacity:[info count]];
+       NSMutableArray *images = [NSMutableArray arrayWithCapacity:[info count]];
 	
 	for (NSDictionary *dict in info) {
         
@@ -500,7 +602,8 @@
              radins: (float) rad
          videoWidth:(int)width
       videoHheightt:(int)Height{
-    
+     if (_movieWriter)
+         [_movieWriter cancelRecording];
     
     dispatch_async(dispatch_get_main_queue(), ^{
         // _fLenInSeconds *= 1.5;
@@ -515,7 +618,7 @@
     
     NSString *filePath = [NSTemporaryDirectory() stringByAppendingPathComponent:@"test.mp4"];
     _movieFile = [[GPUImageMovie alloc] initWithURL:sampleURL];
-    _movieFile.runBenchmark = NO;
+    _movieFile.runBenchmark = YES;
     _movieFile.playAtActualSpeed = YES;
     GPUImageTransformFilter *filter ;
     
@@ -566,6 +669,7 @@
 
         [_filter removeTarget:_movieWriter];
         [_movieWriter finishRecording];
+        _movieWriter=nil;
         [self castVideo];
         
         
@@ -584,22 +688,12 @@
     
     NSLog(@"Started HTTP Server on url %@", url);
     
+
     
-    
-    NSString *type = @"Video";
+    _chromecastController.type = @"Video";
     // id object = type;
+
     
-    [_chromecastController loadMedia:[NSURL URLWithString :url ]
-                        thumbnailURL:[NSURL URLWithString :thumbURL ]
-                               title: _strDateShot
-                            subtitle: @"IPad/iPhone/iTouch"
-                            mimeType:@"video/mp4"
-                           startTime:0
-                            autoPlay:YES
-                          customData:type];
-   
-    
-    NSLog(@"Medialurl = %@",url);
     
     
     dispatch_async(dispatch_get_main_queue(), ^{
@@ -611,6 +705,17 @@
             self.updateStreamTimer = nil;
         }
         
+        [_chromecastController loadMedia:[NSURL URLWithString :url ]
+                            thumbnailURL:[NSURL URLWithString :thumbURL ]
+                                   title: _strDateShot
+                                subtitle: @"IPad/iPhone/iTouch"
+                                mimeType:@"video/mp4"
+                               startTime:0
+                                autoPlay:YES
+                              customData:nil];
+        
+        
+        NSLog(@"Medialurl = %@",url);
 
       
         _playPauseButton.hidden = FALSE;
@@ -662,6 +767,20 @@
     
      [self initControls];
      self.filterProgress.hidden = true;
+    
+    
+    
+    {
+        NSNotificationCenter* center = [NSNotificationCenter defaultCenter];
+        [center addObserver:self selector:@selector(notifyApplicationDidEnterBackground:) name:UIApplicationDidEnterBackgroundNotification object:nil];
+        [center addObserver:self selector:@selector(notifyApplicationWillEnterForeground:) name: UIApplicationWillEnterForegroundNotification object:nil];
+        [center addObserver:self selector:@selector(notifyApplicationDidFinishLaunching:) name: UIApplicationDidFinishLaunchingNotification object:nil];
+        [center addObserver:self selector:@selector(notifyApplicationDidBecomeActive:) name: UIApplicationDidBecomeActiveNotification object:nil];
+        [center addObserver:self selector:@selector(notifyApplicationWillResignActive:) name: UIApplicationWillResignActiveNotification object:nil];
+        [center addObserver:self selector:@selector(notifyApplicationDidReceiveMemoryWarning:) name: UIApplicationDidReceiveMemoryWarningNotification object:nil];
+        [center addObserver:self selector:@selector(notifyApplicationWillTerminate:) name: UIApplicationWillTerminateNotification object:nil];
+    }
+
 }
 
 - (void)viewWillAppear:(BOOL)animated {
@@ -717,14 +836,15 @@
     
     if (!_readyToShowInterface)
         return;
-    NSString *type  = _chromecastController.mediaInformation.customData;
+    NSString *type  =  _chromecastController.type;
     NSLog(type);
     if (type == nil || ![type isEqualToString:@"Video"]){
-        _slider.hidden = FALSE;
+        _slider.hidden = TRUE;
         
-        _currTime.hidden = FALSE;
-        _totalTime.hidden = FALSE;
+        _currTime.hidden = TRUE;
+        _totalTime.hidden = TRUE;
          [_playPauseButton setTitle:@"PLay"forState:UIControlStateNormal];
+       
         return;
     }
 
@@ -749,6 +869,8 @@
         self.totalTime.text = [self getFormattedTime:(_chromecastController.streamDuration - _chromecastController.streamPosition)];
         [self.slider setValue:(_chromecastController.streamPosition / _chromecastController.streamDuration)
          animated:YES];
+        
+        
     }
     if (_chromecastController.playerState == GCKMediaPlayerStatePaused ||
         _chromecastController.playerState == GCKMediaPlayerStateIdle) {
@@ -783,9 +905,17 @@
 #pragma mark - On - screen UI elements
 - (IBAction)pauseButtonClicked:(id)sender {
     
-    NSString *type  = _chromecastController.mediaInformation.customData;
+    if (!_chromecastController.deviceManager.isConnectedToApp)
+    {
+        DeviceViewController *vc = [self.storyboard instantiateViewControllerWithIdentifier:@"devies"];
+        [self presentViewController:vc animated:YES completion:nil];
+    }
+
+    
+    NSString *type  =  _chromecastController.type;
     NSLog(type);
-    if (type == nil && ![type isEqualToString:@"Video"]){
+    if (![type isEqualToString:@"Video"]){
+        NSLog(type);
         [self castVideo];
     }
     
